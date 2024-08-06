@@ -13,20 +13,12 @@ LOG_FILE = "monitor.log"
 
 EXTENSIONS = {
     'provider.middlewares.ProgressBar': 100,
+    'provider.middlewares.ProviderCsvWriterMiddleware': 800,
 }
 
 ITEM_PIPELINES = {
     'provider.pipelines.ProviderPipeline': 300,
 }
-
-DB_HOST = 'localhost'
-DB_NAME = 'provider'
-DB_USER = 'postgres'
-DB_PASSWORD = 'JollyRoger123'
-BATCH_SIZE = 100
-
-DISALLOWED_SUBDOMAINS = ['finance.yahoo.com']
-URL_LIMIT = 1000
 
 PROGRESS_BAR_ENABLED = True
 
