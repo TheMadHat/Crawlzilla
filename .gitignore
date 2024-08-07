@@ -1,5 +1,6 @@
 *.txt
 *.swp
+*.pyc
 
 # OS generated files
 .DS_Store
