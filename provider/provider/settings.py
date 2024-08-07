@@ -1,7 +1,6 @@
 # Scrapy settings for provider project
 import os
-import asyncio
-from provider.middlewares import ProviderCsvWriterMiddleware 
+
 
 LOG_ENABLED = True
 LOG_ENCODING = "utf-8"
@@ -27,7 +26,7 @@ DB_PASSWORD = os.environ.get('DB_PASSWORD')
 BATCH_SIZE = 100
 
 DISALLOWED_SUBDOMAINS = ['finance.yahoo.com']
-URL_LIMIT = 1000
+URL_LIMIT = 100
 
 PROGRESS_BAR_ENABLED = True
 

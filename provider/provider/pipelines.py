@@ -1,4 +1,5 @@
 import psycopg2
+import os
 from psycopg2.extras import execute_batch
 from datetime import datetime, timezone
 from psycopg2 import sql
@@ -6,10 +7,10 @@ from psycopg2 import sql
 class ProviderPipeline:
     def __init__(self, db_host, db_name, db_user, db_password, batch_size=1000):
         print("ProviderPipeline initialized with batch size:", batch_size)
-        self.db_host = db_host
-        self.db_name = db_name
-        self.db_user = db_user
-        self.db_password = db_password
+        self.db_name = os.environ.get('DB_NAME')
+        self.db_user = os.environ.get('DB_USER')
+        self.db_password = os.environ.get('DB_PASSWORD')
+        self.db_host = os.environ.get('DB_HOST')
         self.batch_size = batch_size
         self.data = []
         self.db_conn = None

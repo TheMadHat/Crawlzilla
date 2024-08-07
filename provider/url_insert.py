@@ -1,15 +1,16 @@
 import asyncpg
 import asyncio
+import os
 
 # PostgreSQL connection details
-DB_HOST = 'localhost'
-DB_USER = 'postgres'
-DB_PASSWORD = 'JollyRoger123'
-DB_NAME = 'provider'
+DB_HOST = os.environ.get('DB_HOST')
+DB_NAME = os.environ.get('DB_NAME')
+DB_USER = os.environ.get('DB_USER')
+DB_PASSWORD = os.environ.get('DB_PASSWORD')
 DB_PORT = '5432'
 
 # Path to the text file containing URLs
-TEXT_FILE_PATH = 'urls.txt'
+TEXT_FILE_PATH = '1000.txt'
 
 async def insert_urls():
     # Connect to the PostgreSQL database

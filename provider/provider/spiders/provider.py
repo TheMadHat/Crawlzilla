@@ -1,8 +1,9 @@
 import scrapy
-from scrapy import signals
-import psycopg2
-from urllib.parse import urlparse
 import os
+import psycopg2
+from scrapy import signals
+from scrapy.spiders import Spider
+from urllib.parse import urlparse
 
 class URLSpider(scrapy.Spider):
     name = "provider"
@@ -14,37 +15,34 @@ class URLSpider(scrapy.Spider):
         self.disallowed_subdomains = disallowed_subdomains if disallowed_subdomains else []
         self.url_limit = int(url_limit) if url_limit else 0
         self.processed_count = 0
-        self.db_name = db_name
-        self.db_user = db_user
-        self.db_password = db_password
-        self.db_host = db_host
-
+        self.db_name = os.environ.get('DB_NAME')
+        self.db_user = os.environ.get('DB_USER')
+        self.db_password = os.environ.get('DB_PASSWORD')
+        self.db_host = os.environ.get('DB_HOST')
+    
     @classmethod
     def from_crawler(cls, crawler, *args, **kwargs):
         spider = super(URLSpider, cls).from_crawler(crawler, *args, **kwargs)
         crawler.signals.connect(spider.spider_opened, signal=signals.spider_opened)
-        crawler.signals.connect(spider.spider_closed, signal=signals.spider_closed)
         return spider
-
-    def clear_log_file(self):
-        log_file = self.settings.get('LOG_FILE', 'monitor.log')
-        with open(log_file, 'w') as f:
-            f.write('')  # This will clear the file
-        self.logger.info(f"Cleared log file: {log_file}")
 
     def spider_opened(self, spider):
         self.clear_log_file()  # Clear the log file when the spider opens
         try:
             self.db_connection = psycopg2.connect(
-                dbname=self.db_name,
-                user=self.db_user,
-                password=self.db_password,
-                host=self.db_host
+                dbname=os.environ.get('DB_NAME'),
+                user=os.environ.get('DB_USER'),
+                password=os.environ.get('DB_PASSWORD'),
+                host=os.environ.get('DB_HOST')
             )
             self.db_cursor = self.db_connection.cursor()
         except psycopg2.Error as e:
             self.logger.error(f"Failed to connect to database: {e}")
             raise
+
+    def clear_log_file(self):
+        # Implement the logic to clear the log file
+        pass
 
     def spider_closed(self, spider):
         if self.db_cursor:
