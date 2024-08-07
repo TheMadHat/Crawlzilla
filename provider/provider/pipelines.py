@@ -1,20 +1,19 @@
-from psycopg2 import pool
+import psycopg2
 from psycopg2.extras import execute_batch
 from datetime import datetime, timezone
 from psycopg2 import sql
 
 class ProviderPipeline:
-    def __init__(self, db_host, db_name, db_user, db_password, min_conn=5, max_conn=20, batch_size=1000):
-        self.db_pool = pool.SimpleConnectionPool(
-            min_conn,
-            max_conn,
-            host=db_host,
-            database=db_name,
-            user=db_user,
-            password=db_password
-        )
+    def __init__(self, db_host, db_name, db_user, db_password, batch_size=1000):
+        print("ProviderPipeline initialized with batch size:", batch_size)
+        self.db_host = db_host
+        self.db_name = db_name
+        self.db_user = db_user
+        self.db_password = db_password
         self.batch_size = batch_size
         self.data = []
+        self.db_conn = None
+        self.db_cursor = None
 
     @classmethod
     def from_crawler(cls, crawler):
@@ -23,10 +22,24 @@ class ProviderPipeline:
             db_name=crawler.settings.get('DB_NAME'),
             db_user=crawler.settings.get('DB_USER'),
             db_password=crawler.settings.get('DB_PASSWORD'),
-            min_conn=crawler.settings.getint('DB_MIN_CONN', 5),
-            max_conn=crawler.settings.getint('DB_MAX_CONN', 20),
             batch_size=crawler.settings.getint('BATCH_SIZE', 1000)
         )
+
+    def open_spider(self, spider):
+        self.db_conn = psycopg2.connect(
+            host=self.db_host,
+            database=self.db_name,
+            user=self.db_user,
+            password=self.db_password,
+        )
+        self.db_cursor = self.db_conn.cursor()
+
+    def close_spider(self, spider):
+        self.insert_data(spider)  # Insert any remaining data
+        if self.db_cursor:
+            self.db_cursor.close()
+        if self.db_conn:
+            self.db_conn.close()
 
     def process_item(self, item, spider):
         timestamp = datetime.now(timezone.utc)
@@ -38,29 +51,27 @@ class ProviderPipeline:
         return item
 
     def insert_data(self, spider):
-        conn = self.db_pool.getconn()
+        if not self.db_conn or not self.db_cursor:
+            spider.logger.error("Database connection or cursor is None")
+            return
+
         try:
-            with conn.cursor() as cur:
-                insert_query = sql.SQL("""
-                    INSERT INTO master (id, url, provider, timestamp)
-                    VALUES (%s, %s, %s, %s)
-                    ON CONFLICT (id) DO UPDATE SET
-                        url = EXCLUDED.url,
-                        provider = EXCLUDED.provider,
-                        timestamp = EXCLUDED.timestamp
-                """)
-                execute_batch(cur, insert_query, self.data)
-            conn.commit()
+            # Insert into master table
+            insert_query = sql.SQL("""
+                INSERT INTO master (id, url, provider, timestamp)
+                VALUES (%s, %s, %s, %s)
+                ON CONFLICT (id) DO UPDATE SET
+                    url = EXCLUDED.url,
+                    provider = EXCLUDED.provider,
+                    timestamp = EXCLUDED.timestamp
+            """)
+            execute_batch(self.db_cursor, insert_query, self.data)
+
+            self.db_conn.commit()
             spider.logger.info(f"Inserted {len(self.data)} items into master table")
             self.data.clear()
+
         except Exception as e:
-            conn.rollback()
+            self.db_conn.rollback()
             spider.logger.error(f"Error inserting data: {e}")
             raise e
-        finally:
-            self.db_pool.putconn(conn)
-
-    def close_spider(self, spider):
-        if self.data:
-            self.insert_data(spider)
-        self.db_pool.closeall()
