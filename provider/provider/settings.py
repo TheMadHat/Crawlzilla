@@ -1,4 +1,5 @@
 # Scrapy settings for provider project
+import os
 import asyncio
 from provider.middlewares import ProviderCsvWriterMiddleware 
 
@@ -19,10 +20,10 @@ ITEM_PIPELINES = {
     'provider.pipelines.ProviderPipeline': 300,
 }
 
-DB_HOST = 'localhost'
-DB_NAME = 'provider'
-DB_USER = 'postgres'
-DB_PASSWORD = 'JollyRoger123'
+DB_HOST = os.environ.get('DB_HOST')
+DB_NAME = os.environ.get('DB_NAME')
+DB_USER = os.environ.get('DB_USER')
+DB_PASSWORD = os.environ.get('DB_PASSWORD')
 BATCH_SIZE = 100
 
 DISALLOWED_SUBDOMAINS = ['finance.yahoo.com']
