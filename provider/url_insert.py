@@ -10,7 +10,7 @@ DB_PASSWORD = os.environ.get('DB_PASSWORD')
 DB_PORT = '5432'
 
 # Path to the text file containing URLs
-TEXT_FILE_PATH = 'urls.txt'
+TEXT_FILE_PATH = 'urls2.txt'
 
 async def insert_urls():
     # Connect to the PostgreSQL database
