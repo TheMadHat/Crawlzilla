@@ -10,7 +10,7 @@ DB_PASSWORD = os.environ.get('DB_PASSWORD')
 DB_PORT = '5432'
 
 # Path to the text file containing URLs
-TEXT_FILE_PATH = '1000.txt'
+TEXT_FILE_PATH = 'urls.txt'
 
 async def insert_urls():
     # Connect to the PostgreSQL database
@@ -28,7 +28,10 @@ async def insert_urls():
 
     # Insert URLs into the PostgreSQL table
     async with conn.transaction():
-        await conn.executemany('INSERT INTO urls (url) VALUES ($1)', [(url,) for url in urls])
+        await conn.executemany(
+            'INSERT INTO urls (url) VALUES ($1) ON CONFLICT DO NOTHING',
+            [(url,) for url in urls]
+        )
 
     # Close the database connection
     await conn.close()
