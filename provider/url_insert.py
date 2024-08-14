@@ -36,25 +36,24 @@ async def insert_urls():
 
     logging.info(f"Number of URLs read: {len(urls)}")
 
-    # Insert URLs into the PostgreSQL table and count inserted URLs
+    # Initialize counters
     inserted_count = 0
+    conflict_count = 0
+
     try:
         async with conn.transaction():
             logging.info("Inserting URLs into the database...")
             for url in urls:
-                result = await conn.execute(
-                    '''
-                    INSERT INTO urls (url) 
-                    VALUES ($1)
-                    ON CONFLICT DO NOTHING
-                    RETURNING url
-                    ''',
-                    url
-                )
-                if result:
+                # Check if the URL already exists
+                exists = await conn.fetchval('SELECT EXISTS(SELECT 1 FROM urls WHERE url=$1)', url)
+                if exists:
+                    conflict_count += 1
+                else:
+                    await conn.execute('INSERT INTO urls (url) VALUES ($1)', url)
                     inserted_count += 1
+
             logging.info(f"Number of URLs inserted: {inserted_count}")
-            logging.info(f"Number of conflicts (URLs already in database): {len(urls) - inserted_count}")
+            logging.info(f"Number of conflicts (URLs already in database): {conflict_count}")
     except Exception as e:
         logging.error(f"An error occurred during URL insertion: {e}")
     finally:
