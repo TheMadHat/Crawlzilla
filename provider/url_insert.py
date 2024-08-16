@@ -2,6 +2,7 @@ import asyncpg
 import asyncio
 import os
 import logging
+import argparse
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -13,13 +14,15 @@ DB_USER = os.environ.get('DB_USER')
 DB_PASSWORD = os.environ.get('DB_PASSWORD')
 DB_PORT = '5432'
 
-# Path to the text file containing URLs
-TEXT_FILE_PATH = 'urls.txt'
+parser = argparse.ArgumentParser(description="Insert URLs into PostgreSQL from a text file.")
+parser.add_argument('text_file_path', type=str, help="The path to the text file containing URLs.")
+args = parser.parse_args()
+
+TEXT_FILE_PATH = args.text_file_path
 
 async def insert_urls():
     logging.info("Starting URL insertion process...")
 
-    # Connect to the PostgreSQL database
     logging.info(f"Connecting to PostgreSQL database {DB_NAME} at {DB_HOST}:{DB_PORT}")
     conn = await asyncpg.connect(
         host=DB_HOST,

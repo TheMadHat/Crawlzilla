@@ -61,6 +61,10 @@ class ProviderPipeline:
             spider.logger.info("No data to insert.")
             return
 
+        if not url:
+            spider.logger.warning("Skipping item with invalid or None URL")
+            return
+
         try:
             # Insert into master table
             insert_query = sql.SQL("""

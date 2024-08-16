@@ -108,6 +108,9 @@ class URLSpider(scrapy.Spider):
 
                 url = row[1]
                 parsed_url = urlparse(url)
+                if parsed_url.hostname is None:
+                    self.logger.warning(f"Skipping invalid URL: {url}")
+                    continue
 
                 # Correctly check for disallowed subdomains
                 disallowed = False
