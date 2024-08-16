@@ -6,7 +6,7 @@
 import scrapy
 
 
-class DiscoverItem(scrapy.Item):
+class IndexItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
     pass

@@ -1,4 +1,4 @@
-# Scrapy settings for discover project
+# Scrapy settings for index project
 import os
 
 
@@ -17,8 +17,8 @@ EXTENSIONS = {
 
 BOT_NAME = "yahoo_bot"
 
-SPIDER_MODULES = ["discover.spiders"]
-NEWSPIDER_MODULE = "discover.spiders"
+SPIDER_MODULES = ["index.spiders"]
+NEWSPIDER_MODULE = "index.spiders"
 
 DB_HOST = os.environ.get('DB_HOST')
 DB_NAME = os.environ.get('DB_NAME')
