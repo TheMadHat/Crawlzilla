@@ -61,7 +61,7 @@ class ProviderPipeline:
             spider.logger.info("No data to insert.")
             return
 
-        if not url:
+        if not item['url']:
             spider.logger.warning("Skipping item with invalid or None URL")
             return
 

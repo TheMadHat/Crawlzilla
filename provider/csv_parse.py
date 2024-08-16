@@ -1,6 +1,6 @@
 import csv
 
-input_file = 'all_inlinks_uk_news_yahoo.csv'
+input_file = 'all_inlinks_ca_yahoo.csv'
 output_file = 'parsed.txt'
 
 # Open the input CSV file and output text file
