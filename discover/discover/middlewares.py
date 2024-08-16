@@ -68,7 +68,6 @@ class ProgressBar:
         if self.progress:
             self.progress.update(self.task, concurrent=concurrent)
 
-
 class DiscoverSpiderMiddleware:
     # Not all methods need to be defined. If a method is not defined,
     # scrapy acts as if the spider middleware does not modify the
