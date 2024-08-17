@@ -1,4 +1,3 @@
-# Scrapy settings for index project
 import os
 
 
@@ -12,7 +11,11 @@ LOG_LEVEL = "DEBUG"
 LOG_FILE = "monitor.log"
 
 EXTENSIONS = {
-    'provider.middlewares.ProgressBar': 100,
+    'index.middlewares.ProgressBar': 100,
+}
+
+ITEM_PIPELINES = {
+    'index.pipelines.URLPipeline': 300,
 }
 
 BOT_NAME = "yahoo_bot"
@@ -26,7 +29,9 @@ DB_USER = os.environ.get('DB_USER')
 DB_PASSWORD = os.environ.get('DB_PASSWORD')
 BATCH_SIZE = 1000
 
+ALLOWED_DOMAINS = ['yahoo.com']
 DISALLOWED_SUBDOMAINS = ['finance.yahoo.com']
+START_URL = "https://www.yahoo.com"
 
 PROGRESS_BAR_ENABLED = True
 

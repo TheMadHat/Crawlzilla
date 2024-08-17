@@ -1,3 +1,4 @@
+import os
 import csv
 from rich.console import Console
 from rich.progress import Progress, SpinnerColumn, BarColumn, TextColumn, TimeRemainingColumn
