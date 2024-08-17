@@ -4,6 +4,9 @@ from rich.console import Console
 from rich.progress import Progress, SpinnerColumn, BarColumn, TextColumn, TimeRemainingColumn
 from scrapy import signals
 from scrapy.exceptions import NotConfigured
+from dotenv import load_dotenv
+
+load_dotenv()
 
 class ProgressBar:
     def __init__(self, crawler):

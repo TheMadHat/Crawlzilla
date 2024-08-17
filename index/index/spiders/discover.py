@@ -6,10 +6,10 @@ from scrapy import signals
 from scrapy.spiders import Spider
 import logging
 from datetime import datetime
-from dotenv import load_dotenv
 import psycopg2
+from dotenv import load_dotenv
 
-load_dotenv
+load_dotenv()
 
 class URLSpider(scrapy.Spider):
     name = "discover"
@@ -43,17 +43,7 @@ class URLSpider(scrapy.Spider):
     def spider_opened(self, spider):
         self.start_time = datetime.now()
         self.clear_log_file()
-        try:
-            self.db_connection = psycopg2.connect(
-                dbname=os.environ.get('DB_NAME'),
-                user=os.environ.get('DB_USER'),
-                password=os.environ.get('DB_PASSWORD'),
-                host=os.environ.get('DB_HOST')
-            )
-            self.db_cursor = self.db_connection.cursor()
-        except psycopg2.Error as e:
-            self.logger.error(f"Failed to connect to database: {e}")
-            raise
+        raise
 
     def clear_log_file(self):
         log_file = self.settings.get('LOG_FILE', 'monitor.log')

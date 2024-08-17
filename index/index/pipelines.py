@@ -1,13 +1,16 @@
 import os
 from itemadapter import ItemAdapter
 import psycopg2
+from dotenv import load_dotenv
+
+load_dotenv()
 
 class URLPipeline:
-    def __init__(self, db_host, db_name, db_user, db_password, batch_size=1000):
-        self.db_host = db_host
-        self.db_name = db_name
-        self.db_user = db_user
-        self.db_password = db_password
+    def __init__(self, batch_size=1000):
+        self.db_name = os.environ.get('DB_NAME')
+        self.db_user = os.environ.get('DB_USER')
+        self.db_password = os.environ.get('DB_PASSWORD')
+        self.db_host = os.environ.get('DB_HOST')
         self.batch_size = batch_size
         self.processed_ids = []
         self.data = []
@@ -16,12 +19,7 @@ class URLPipeline:
 
     @classmethod
     def from_crawler(cls, crawler):
-        return cls(
-            db_host=crawler.settings.get('DB_HOST'),
-            db_name=crawler.settings.get('DB_NAME'),
-            db_user=crawler.settings.get('DB_USER'),
-            db_password=crawler.settings.get('DB_PASSWORD'),
-        )
+        return cls(batch_size=crawler.settings.get('BATCH_SIZE', 1000))
 
     def open_spider(self, spider):
         self.db_conn = psycopg2.connect(

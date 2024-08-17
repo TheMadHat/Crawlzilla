@@ -1,5 +1,7 @@
 import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
 LOG_ENABLED = True
 LOG_ENCODING = "utf-8"
