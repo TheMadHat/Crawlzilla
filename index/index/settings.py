@@ -35,6 +35,8 @@ ALLOWED_DOMAINS = ['yahoo.com']
 DISALLOWED_SUBDOMAINS = ['finance.yahoo.com']
 START_URL = "https://www.yahoo.com"
 
+MY_JOBDIR = 'home/ubuntu/crawlzilla_v1/index/index/jobs'
+
 PROGRESS_BAR_ENABLED = True
 
 USER_AGENT = "Yahoo-Internal-SEO/1.1 (Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:124.0) Gecko 20100101 Firefox/124 +yo/SEO-bot)"
