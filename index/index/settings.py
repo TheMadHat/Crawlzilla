@@ -25,15 +25,17 @@ BOT_NAME = "yahoo_bot"
 SPIDER_MODULES = ["index.spiders"]
 NEWSPIDER_MODULE = "index.spiders"
 
-DB_HOST = os.environ.get('DB_HOST')
-DB_NAME = os.environ.get('DB_NAME')
-DB_USER = os.environ.get('DB_USER')
-DB_PASSWORD = os.environ.get('DB_PASSWORD')
-BATCH_SIZE = 1000
+DATABASE_CONFIG = {
+    'host': os.getenv('HOST'),
+    'database': os.getenv('DB_NAME'),
+    'user': os.getenv('DB_USER'),
+    'password': os.getenv('DB_PASSWORD')
+}
 
 ALLOWED_DOMAINS = ['yahoo.com']
 DISALLOWED_SUBDOMAINS = ['finance.yahoo.com']
 START_URL = "https://www.yahoo.com"
+BATCH_SIZE = 1000
 
 MY_JOBDIR = 'home/ubuntu/crawlzilla_v1/index/index/jobs'
 

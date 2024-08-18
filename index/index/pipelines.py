@@ -1,45 +1,48 @@
 import os
+from datetime import datetime, timezone
 from itemadapter import ItemAdapter
 import psycopg2
+from psycopg2 import sql
 from dotenv import load_dotenv
 
 load_dotenv()
 
+def execute_batch(cursor, query, data, page_size=1000):
+    for i in range(0, len(data), page_size):
+        cursor.executemany(query, data[i:i + page_size])
+
 class URLPipeline:
-    def __init__(self, batch_size=1000):
-        self.db_name = os.environ.get('DB_NAME')
-        self.db_user = os.environ.get('DB_USER')
-        self.db_password = os.environ.get('DB_PASSWORD')
-        self.db_host = os.environ.get('DB_HOST')
+    def __init__(self, database_config, batch_size=1000):
+        self.database_config = database_config
         self.batch_size = batch_size
-        self.processed_ids = []
         self.data = []
         self.db_conn = None
         self.db_cursor = None
 
     @classmethod
     def from_crawler(cls, crawler):
-        return cls(batch_size=crawler.settings.get('BATCH_SIZE', 1000))
+        database_config = crawler.settings.get('DATABASE_CONFIG')
+        return cls(database_config, batch_size=crawler.settings.get('BATCH_SIZE', 1000))
 
     def open_spider(self, spider):
-        self.db_conn = psycopg2.connect(
-            host=self.db_host,
-            database=self.db_name,
-            user=self.db_user,
-            password=self.db_password,
-        )
-        self.db_cursor = self.db_conn.cursor()
+        try:
+            self.db_conn = psycopg2.connect(**self.database_config)
+            self.db_cursor = self.db_conn.cursor()
+        except psycopg2.Error as e:
+            spider.logger.error(f"Error connecting to database: {e}")
+            raise  # Consider how you want to handle this error
 
     def close_spider(self, spider):
-        self.insert_data(spider)  # Insert any remaining data
+        if self.data:
+            self.insert_data(spider)
         if self.db_cursor:
             self.db_cursor.close()
         if self.db_conn:
             self.db_conn.close()
-    
+
     def process_item(self, item, spider):
         timestamp = datetime.now(timezone.utc)
-        self.data.append((item['url'], item['priority'], timestamp))
+        self.data.append((item['url'], item.get('priority', 1), timestamp))  # Default priority
 
         if len(self.data) >= self.batch_size:
             self.insert_data(spider)
@@ -47,34 +50,26 @@ class URLPipeline:
         return item
 
     def insert_data(self, spider):
-        if not self.db_conn or not self.db_cursor:
-            spider.logger.error("Database connection or cursor is None")
-            return
-
         if not self.data:
             spider.logger.info("No data to insert.")
             return
 
-        if not item['url']:
-            spider.logger.warning("Skipping item with invalid or None URL")
-            return
-
         try:
             insert_query = sql.SQL("""
-                INSERT INTO discovery (id, url, priority, timestamp)
-                VALUES (%s, %s, %s, %s)
-                ON CONFLICT (id) DO UPDATE SET
-                    url = EXCLUDED.url,
+                INSERT INTO discovery (url, priority, timestamp)
+                VALUES (%s, %s, %s)
+                ON CONFLICT (url) DO UPDATE SET
+                    priority = EXCLUDED.priority,
                     timestamp = EXCLUDED.timestamp
             """)
             execute_batch(self.db_cursor, insert_query, self.data)
-
+            self.db_conn.commit()
             self.data.clear()
-
-        except Exception as e:
+            spider.logger.info(f"Inserted {len(self.data)} records into the database.")
+        except psycopg2.Error as e:
             self.db_conn.rollback()
             spider.logger.error(f"Error inserting data: {e}")
-            raise e
+            raise  
 
 class IndexPipeline:
     def process_item(self, item, spider):

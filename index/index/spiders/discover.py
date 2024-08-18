@@ -24,10 +24,6 @@ class URLSpider(scrapy.Spider):
         self.db_cursor = None
         self.url_limit = int(url_limit) if url_limit else 0
         self.processed_count = 0
-        self.db_name = os.environ.get('DB_NAME')
-        self.db_user = os.environ.get('DB_USER')
-        self.db_password = os.environ.get('DB_PASSWORD')
-        self.db_host = os.environ.get('DB_HOST')
    
     @classmethod
     def from_crawler(cls, crawler, *args, **kwargs):
