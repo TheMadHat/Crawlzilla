@@ -5,7 +5,7 @@ import psycopg2
 from psycopg2 import sql
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv('/home/ubuntu/crawlzilla_v1/index/config.env')
 
 def execute_batch(cursor, query, data, page_size=1000):
     for i in range(0, len(data), page_size):
@@ -30,7 +30,7 @@ class URLPipeline:
             self.db_cursor = self.db_conn.cursor()
         except psycopg2.Error as e:
             spider.logger.error(f"Error connecting to database: {e}")
-            raise  # Consider how you want to handle this error
+            raise
 
     def close_spider(self, spider):
         if self.data:
@@ -42,7 +42,7 @@ class URLPipeline:
 
     def process_item(self, item, spider):
         timestamp = datetime.now(timezone.utc)
-        self.data.append((item['url'], item.get('priority', 1), timestamp))  # Default priority
+        self.data.append((item['url'], item.get('priority', 1), timestamp))
 
         if len(self.data) >= self.batch_size:
             self.insert_data(spider)
@@ -64,8 +64,8 @@ class URLPipeline:
             """)
             execute_batch(self.db_cursor, insert_query, self.data)
             self.db_conn.commit()
-            self.data.clear()
             spider.logger.info(f"Inserted {len(self.data)} records into the database.")
+            self.data.clear()
         except psycopg2.Error as e:
             self.db_conn.rollback()
             spider.logger.error(f"Error inserting data: {e}")

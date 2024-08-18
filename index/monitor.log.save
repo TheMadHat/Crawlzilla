@@ -1,0 +1,1354 @@
+2024-08-16 23:42:45 [discover] INFO: Cleared log file: monitor.log
+2024-08-16 23:42:45 [scrapy.extensions.logstats] INFO: Crawled 0 pages (at 0 pages/min), scraped 0 items (at 0 items/min)
+2024-08-16 23:42:45 [scrapy.utils.signal] ERROR: Error caught on signal handler: <bound method ProgressBar.spider_opened of <index.middlewares.ProgressBar object at 0x74c3b8d04050>>
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/utils/defer.py", line 348, in maybeDeferred_coro
+    result = f(*args, **kw)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/pydispatch/robustapply.py", line 55, in robustApply
+    return receiver(*arguments, **named)
+  File "/home/ubuntu/crawlzilla_v1/index/index/middlewares.py", line 32, in spider_opened
+    self.total_urls = len(list(spider.start_requests()))
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/spiders/__init__.py", line 79, in start_requests
+    yield Request(url, dont_filter=True)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/http/request/__init__.py", line 93, in __init__
+    self._set_url(url)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/http/request/__init__.py", line 143, in _set_url
+    raise ValueError(f"Missing scheme in request url: {self._url}")
+ValueError: Missing scheme in request url: h
+2024-08-16 23:42:45 [scrapy.extensions.telnet] INFO: Telnet console listening on 127.0.0.1:6024
+2024-08-16 23:42:45 [scrapy.core.engine] ERROR: Error while obtaining start requests
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/core/engine.py", line 182, in _next_request
+    request = next(self.slot.start_requests)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/spiders/__init__.py", line 79, in start_requests
+    yield Request(url, dont_filter=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/http/request/__init__.py", line 93, in __init__
+    self._set_url(url)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/http/request/__init__.py", line 143, in _set_url
+    raise ValueError(f"Missing scheme in request url: {self._url}")
+ValueError: Missing scheme in request url: h
+2024-08-16 23:42:45 [scrapy.core.engine] INFO: Closing spider (finished)
+2024-08-16 23:42:45 [discover] INFO: No data to insert.
+2024-08-16 23:42:45 [scrapy.statscollectors] INFO: Dumping Scrapy stats:
+{'elapsed_time_seconds': 0.005985,
+ 'finish_reason': 'finished',
+ 'finish_time': datetime.datetime(2024, 8, 16, 23, 42, 45, 722050, tzinfo=datetime.timezone.utc),
+ 'log_count/DEBUG': 3,
+ 'log_count/ERROR': 2,
+ 'log_count/INFO': 12,
+ 'memusage/max': 78327808,
+ 'memusage/startup': 78327808,
+ 'start_time': datetime.datetime(2024, 8, 16, 23, 42, 45, 716065, tzinfo=datetime.timezone.utc)}
+2024-08-16 23:42:45 [scrapy.core.engine] INFO: Spider closed (finished)
+2024-08-17 02:08:15 [scrapy.utils.log] INFO: Scrapy 2.11.2 started (bot: yahoo_bot)
+2024-08-17 02:08:15 [scrapy.utils.log] INFO: Versions: lxml 5.2.2.0, libxml2 2.12.6, cssselect 1.2.0, parsel 1.9.1, w3lib 2.2.1, Twisted 24.3.0, Python 3.12.3 (main, Jul 31 2024, 17:43:48) [GCC 13.2.0], pyOpenSSL 24.2.1 (OpenSSL 3.3.1 4 Jun 2024), cryptography 43.0.0, Platform Linux-6.8.0-1013-aws-x86_64-with-glibc2.39
+2024-08-17 02:08:15 [scrapy.addons] INFO: Enabled addons:
+[]
+2024-08-17 02:08:15 [asyncio] DEBUG: Using selector: EpollSelector
+2024-08-17 02:08:15 [scrapy.utils.log] DEBUG: Using reactor: twisted.internet.asyncioreactor.AsyncioSelectorReactor
+2024-08-17 02:08:15 [scrapy.utils.log] DEBUG: Using asyncio event loop: asyncio.unix_events._UnixSelectorEventLoop
+2024-08-17 02:08:15 [scrapy.extensions.telnet] INFO: Telnet Password: d4c32dad6ccd8976
+2024-08-17 02:08:15 [scrapy.middleware] INFO: Enabled extensions:
+['scrapy.extensions.corestats.CoreStats',
+ 'scrapy.extensions.telnet.TelnetConsole',
+ 'scrapy.extensions.memusage.MemoryUsage',
+ 'scrapy.extensions.logstats.LogStats',
+ 'index.middlewares.ProgressBar']
+2024-08-17 02:08:15 [scrapy.crawler] INFO: Overridden settings:
+{'AUTOTHROTTLE_DEBUG': True,
+ 'AUTOTHROTTLE_MAX_DELAY': 30,
+ 'AUTOTHROTTLE_START_DELAY': 0,
+ 'AUTOTHROTTLE_TARGET_CONCURRENCY': 1000,
+ 'BOT_NAME': 'yahoo_bot',
+ 'CONCURRENT_REQUESTS': 1000,
+ 'COOKIES_ENABLED': False,
+ 'FEED_EXPORT_ENCODING': 'utf-8',
+ 'LOG_FILE': 'monitor.log',
+ 'NEWSPIDER_MODULE': 'index.spiders',
+ 'REDIRECT_MAX_TIMES': 5,
+ 'REQUEST_FINGERPRINTER_IMPLEMENTATION': '2.7',
+ 'SPIDER_MODULES': ['index.spiders'],
+ 'TWISTED_REACTOR': 'twisted.internet.asyncioreactor.AsyncioSelectorReactor',
+ 'USER_AGENT': 'Yahoo-Internal-SEO/1.1 (Mozilla/5.0 (Windows NT 10.0; Win64; '
+               'x64; rv:124.0) Gecko 20100101 Firefox/124 +yo/SEO-bot)'}
+2024-08-17 02:08:15 [scrapy.middleware] INFO: Enabled downloader middlewares:
+['scrapy.downloadermiddlewares.offsite.OffsiteMiddleware',
+ 'scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware',
+ 'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware',
+ 'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware',
+ 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware',
+ 'scrapy.downloadermiddlewares.retry.RetryMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware',
+ 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.RedirectMiddleware',
+ 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware',
+ 'scrapy.downloadermiddlewares.stats.DownloaderStats']
+2024-08-17 02:08:15 [scrapy.middleware] INFO: Enabled spider middlewares:
+['scrapy.spidermiddlewares.httperror.HttpErrorMiddleware',
+ 'scrapy.spidermiddlewares.referer.RefererMiddleware',
+ 'scrapy.spidermiddlewares.urllength.UrlLengthMiddleware',
+ 'scrapy.spidermiddlewares.depth.DepthMiddleware']
+2024-08-17 02:08:15 [scrapy.middleware] INFO: Enabled item pipelines:
+['index.pipelines.URLPipeline']
+2024-08-17 02:08:15 [scrapy.core.engine] INFO: Spider opened
+2024-08-17 02:08:15 [scrapy.core.engine] INFO: Closing spider (shutdown)
+2024-08-17 02:08:15 [discover] ERROR: Database connection or cursor is None
+2024-08-17 02:08:15 [scrapy.utils.signal] ERROR: Error caught on signal handler: <bound method CoreStats.spider_closed of <scrapy.extensions.corestats.CoreStats object at 0x7a07c25b02f0>>
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/crawler.py", line 160, in crawl
+    yield self.engine.open_spider(self.spider, start_requests)
+psycopg2.OperationalError: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  role "ubuntu" does not exist
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/utils/defer.py", line 348, in maybeDeferred_coro
+    result = f(*args, **kw)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/pydispatch/robustapply.py", line 55, in robustApply
+    return receiver(*arguments, **named)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/extensions/corestats.py", line 30, in spider_closed
+    elapsed_time = finish_time - self.start_time
+TypeError: unsupported operand type(s) for -: 'datetime.datetime' and 'NoneType'
+2024-08-17 02:08:15 [scrapy.statscollectors] INFO: Dumping Scrapy stats:
+{'log_count/DEBUG': 3, 'log_count/ERROR': 2, 'log_count/INFO': 8}
+2024-08-17 02:08:15 [scrapy.core.engine] INFO: Spider closed (shutdown)
+2024-08-17 02:08:15 [twisted] CRITICAL: Unhandled error in Deferred:
+2024-08-17 02:08:15 [twisted] CRITICAL: 
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/twisted/internet/defer.py", line 2003, in _inlineCallbacks
+    result = context.run(gen.send, result)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/crawler.py", line 160, in crawl
+    yield self.engine.open_spider(self.spider, start_requests)
+psycopg2.OperationalError: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  role "ubuntu" does not exist
+
+2024-08-17 02:15:52 [scrapy.utils.log] INFO: Scrapy 2.11.2 started (bot: yahoo_bot)
+2024-08-17 02:15:52 [scrapy.utils.log] INFO: Versions: lxml 5.2.2.0, libxml2 2.12.6, cssselect 1.2.0, parsel 1.9.1, w3lib 2.2.1, Twisted 24.3.0, Python 3.12.3 (main, Jul 31 2024, 17:43:48) [GCC 13.2.0], pyOpenSSL 24.2.1 (OpenSSL 3.3.1 4 Jun 2024), cryptography 43.0.0, Platform Linux-6.8.0-1013-aws-x86_64-with-glibc2.39
+2024-08-17 02:15:52 [scrapy.addons] INFO: Enabled addons:
+[]
+2024-08-17 02:15:52 [asyncio] DEBUG: Using selector: EpollSelector
+2024-08-17 02:15:52 [scrapy.utils.log] DEBUG: Using reactor: twisted.internet.asyncioreactor.AsyncioSelectorReactor
+2024-08-17 02:15:52 [scrapy.utils.log] DEBUG: Using asyncio event loop: asyncio.unix_events._UnixSelectorEventLoop
+2024-08-17 02:15:52 [scrapy.extensions.telnet] INFO: Telnet Password: 58ab50946e21e3f2
+2024-08-17 02:15:52 [scrapy.middleware] INFO: Enabled extensions:
+['scrapy.extensions.corestats.CoreStats',
+ 'scrapy.extensions.telnet.TelnetConsole',
+ 'scrapy.extensions.memusage.MemoryUsage',
+ 'scrapy.extensions.logstats.LogStats',
+ 'index.middlewares.ProgressBar']
+2024-08-17 02:15:52 [scrapy.crawler] INFO: Overridden settings:
+{'AUTOTHROTTLE_DEBUG': True,
+ 'AUTOTHROTTLE_MAX_DELAY': 30,
+ 'AUTOTHROTTLE_START_DELAY': 0,
+ 'AUTOTHROTTLE_TARGET_CONCURRENCY': 1000,
+ 'BOT_NAME': 'yahoo_bot',
+ 'CONCURRENT_REQUESTS': 1000,
+ 'COOKIES_ENABLED': False,
+ 'FEED_EXPORT_ENCODING': 'utf-8',
+ 'LOG_FILE': 'monitor.log',
+ 'NEWSPIDER_MODULE': 'index.spiders',
+ 'REDIRECT_MAX_TIMES': 5,
+ 'REQUEST_FINGERPRINTER_IMPLEMENTATION': '2.7',
+ 'SPIDER_MODULES': ['index.spiders'],
+ 'TWISTED_REACTOR': 'twisted.internet.asyncioreactor.AsyncioSelectorReactor',
+ 'USER_AGENT': 'Yahoo-Internal-SEO/1.1 (Mozilla/5.0 (Windows NT 10.0; Win64; '
+               'x64; rv:124.0) Gecko 20100101 Firefox/124 +yo/SEO-bot)'}
+2024-08-17 02:15:52 [scrapy.middleware] INFO: Enabled downloader middlewares:
+['scrapy.downloadermiddlewares.offsite.OffsiteMiddleware',
+ 'scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware',
+ 'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware',
+ 'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware',
+ 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware',
+ 'scrapy.downloadermiddlewares.retry.RetryMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware',
+ 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.RedirectMiddleware',
+ 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware',
+ 'scrapy.downloadermiddlewares.stats.DownloaderStats']
+2024-08-17 02:15:52 [scrapy.middleware] INFO: Enabled spider middlewares:
+['scrapy.spidermiddlewares.httperror.HttpErrorMiddleware',
+ 'scrapy.spidermiddlewares.referer.RefererMiddleware',
+ 'scrapy.spidermiddlewares.urllength.UrlLengthMiddleware',
+ 'scrapy.spidermiddlewares.depth.DepthMiddleware']
+2024-08-17 02:15:52 [scrapy.middleware] INFO: Enabled item pipelines:
+['index.pipelines.URLPipeline']
+2024-08-17 02:15:52 [scrapy.core.engine] INFO: Spider opened
+2024-08-17 02:15:52 [scrapy.core.engine] INFO: Closing spider (shutdown)
+2024-08-17 02:15:52 [discover] ERROR: Database connection or cursor is None
+2024-08-17 02:15:52 [scrapy.utils.signal] ERROR: Error caught on signal handler: <bound method CoreStats.spider_closed of <scrapy.extensions.corestats.CoreStats object at 0x79829b295cd0>>
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/crawler.py", line 160, in crawl
+    yield self.engine.open_spider(self.spider, start_requests)
+psycopg2.OperationalError: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  role "ubuntu" does not exist
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/utils/defer.py", line 348, in maybeDeferred_coro
+    result = f(*args, **kw)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/pydispatch/robustapply.py", line 55, in robustApply
+    return receiver(*arguments, **named)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/extensions/corestats.py", line 30, in spider_closed
+    elapsed_time = finish_time - self.start_time
+TypeError: unsupported operand type(s) for -: 'datetime.datetime' and 'NoneType'
+2024-08-17 02:15:52 [scrapy.statscollectors] INFO: Dumping Scrapy stats:
+{'log_count/DEBUG': 3, 'log_count/ERROR': 2, 'log_count/INFO': 8}
+2024-08-17 02:15:52 [scrapy.core.engine] INFO: Spider closed (shutdown)
+2024-08-17 02:15:52 [twisted] CRITICAL: Unhandled error in Deferred:
+2024-08-17 02:15:52 [twisted] CRITICAL: 
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/twisted/internet/defer.py", line 2003, in _inlineCallbacks
+    result = context.run(gen.send, result)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/crawler.py", line 160, in crawl
+    yield self.engine.open_spider(self.spider, start_requests)
+psycopg2.OperationalError: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  role "ubuntu" does not exist
+
+2024-08-18 16:17:22 [scrapy.utils.log] INFO: Scrapy 2.11.2 started (bot: yahoo_bot)
+2024-08-18 16:17:22 [scrapy.utils.log] INFO: Versions: lxml 5.2.2.0, libxml2 2.12.6, cssselect 1.2.0, parsel 1.9.1, w3lib 2.2.1, Twisted 24.3.0, Python 3.12.3 (main, Jul 31 2024, 17:43:48) [GCC 13.2.0], pyOpenSSL 24.2.1 (OpenSSL 3.3.1 4 Jun 2024), cryptography 43.0.0, Platform Linux-6.8.0-1013-aws-x86_64-with-glibc2.39
+2024-08-18 16:17:22 [scrapy.addons] INFO: Enabled addons:
+[]
+2024-08-18 16:17:22 [asyncio] DEBUG: Using selector: EpollSelector
+2024-08-18 16:17:22 [scrapy.utils.log] DEBUG: Using reactor: twisted.internet.asyncioreactor.AsyncioSelectorReactor
+2024-08-18 16:17:22 [scrapy.utils.log] DEBUG: Using asyncio event loop: asyncio.unix_events._UnixSelectorEventLoop
+2024-08-18 16:17:22 [scrapy.extensions.telnet] INFO: Telnet Password: ac6d0b9cb8e291e8
+2024-08-18 16:17:22 [scrapy.middleware] INFO: Enabled extensions:
+['scrapy.extensions.corestats.CoreStats',
+ 'scrapy.extensions.telnet.TelnetConsole',
+ 'scrapy.extensions.memusage.MemoryUsage',
+ 'scrapy.extensions.logstats.LogStats',
+ 'index.middlewares.ProgressBar']
+2024-08-18 16:17:22 [scrapy.crawler] INFO: Overridden settings:
+{'AUTOTHROTTLE_DEBUG': True,
+ 'AUTOTHROTTLE_MAX_DELAY': 30,
+ 'AUTOTHROTTLE_START_DELAY': 0,
+ 'AUTOTHROTTLE_TARGET_CONCURRENCY': 1000,
+ 'BOT_NAME': 'yahoo_bot',
+ 'CONCURRENT_REQUESTS': 1000,
+ 'COOKIES_ENABLED': False,
+ 'FEED_EXPORT_ENCODING': 'utf-8',
+ 'LOG_FILE': 'monitor.log',
+ 'NEWSPIDER_MODULE': 'index.spiders',
+ 'REDIRECT_MAX_TIMES': 5,
+ 'REQUEST_FINGERPRINTER_IMPLEMENTATION': '2.7',
+ 'SPIDER_MODULES': ['index.spiders'],
+ 'TWISTED_REACTOR': 'twisted.internet.asyncioreactor.AsyncioSelectorReactor',
+ 'USER_AGENT': 'Yahoo-Internal-SEO/1.1 (Mozilla/5.0 (Windows NT 10.0; Win64; '
+               'x64; rv:124.0) Gecko 20100101 Firefox/124 +yo/SEO-bot)'}
+2024-08-18 16:17:22 [scrapy.middleware] INFO: Enabled downloader middlewares:
+['scrapy.downloadermiddlewares.offsite.OffsiteMiddleware',
+ 'scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware',
+ 'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware',
+ 'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware',
+ 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware',
+ 'scrapy.downloadermiddlewares.retry.RetryMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware',
+ 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.RedirectMiddleware',
+ 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware',
+ 'scrapy.downloadermiddlewares.stats.DownloaderStats']
+2024-08-18 16:17:22 [scrapy.middleware] INFO: Enabled spider middlewares:
+['scrapy.spidermiddlewares.httperror.HttpErrorMiddleware',
+ 'scrapy.spidermiddlewares.referer.RefererMiddleware',
+ 'scrapy.spidermiddlewares.urllength.UrlLengthMiddleware',
+ 'scrapy.spidermiddlewares.depth.DepthMiddleware']
+2024-08-18 16:17:22 [scrapy.middleware] INFO: Enabled item pipelines:
+['index.pipelines.URLPipeline']
+2024-08-18 16:17:22 [scrapy.core.engine] INFO: Spider opened
+2024-08-18 16:17:22 [scrapy.core.engine] INFO: Closing spider (shutdown)
+2024-08-18 16:17:22 [discover] ERROR: Database connection or cursor is None
+2024-08-18 16:17:22 [scrapy.utils.signal] ERROR: Error caught on signal handler: <bound method CoreStats.spider_closed of <scrapy.extensions.corestats.CoreStats object at 0x7e6320a5fe30>>
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/crawler.py", line 160, in crawl
+    yield self.engine.open_spider(self.spider, start_requests)
+psycopg2.OperationalError: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  role "ubuntu" does not exist
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/utils/defer.py", line 348, in maybeDeferred_coro
+    result = f(*args, **kw)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/pydispatch/robustapply.py", line 55, in robustApply
+    return receiver(*arguments, **named)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/extensions/corestats.py", line 30, in spider_closed
+    elapsed_time = finish_time - self.start_time
+TypeError: unsupported operand type(s) for -: 'datetime.datetime' and 'NoneType'
+2024-08-18 16:17:22 [scrapy.statscollectors] INFO: Dumping Scrapy stats:
+{'log_count/DEBUG': 3, 'log_count/ERROR': 2, 'log_count/INFO': 8}
+2024-08-18 16:17:22 [scrapy.core.engine] INFO: Spider closed (shutdown)
+2024-08-18 16:17:22 [twisted] CRITICAL: Unhandled error in Deferred:
+2024-08-18 16:17:22 [twisted] CRITICAL: 
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/twisted/internet/defer.py", line 2003, in _inlineCallbacks
+    result = context.run(gen.send, result)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/crawler.py", line 160, in crawl
+    yield self.engine.open_spider(self.spider, start_requests)
+psycopg2.OperationalError: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  role "ubuntu" does not exist
+
+2024-08-18 16:27:32 [scrapy.utils.log] INFO: Scrapy 2.11.2 started (bot: yahoo_bot)
+2024-08-18 16:27:32 [scrapy.utils.log] INFO: Versions: lxml 5.2.2.0, libxml2 2.12.6, cssselect 1.2.0, parsel 1.9.1, w3lib 2.2.1, Twisted 24.3.0, Python 3.12.3 (main, Jul 31 2024, 17:43:48) [GCC 13.2.0], pyOpenSSL 24.2.1 (OpenSSL 3.3.1 4 Jun 2024), cryptography 43.0.0, Platform Linux-6.8.0-1013-aws-x86_64-with-glibc2.39
+2024-08-18 16:27:32 [scrapy.addons] INFO: Enabled addons:
+[]
+2024-08-18 16:27:32 [asyncio] DEBUG: Using selector: EpollSelector
+2024-08-18 16:27:32 [scrapy.utils.log] DEBUG: Using reactor: twisted.internet.asyncioreactor.AsyncioSelectorReactor
+2024-08-18 16:27:32 [scrapy.utils.log] DEBUG: Using asyncio event loop: asyncio.unix_events._UnixSelectorEventLoop
+2024-08-18 16:27:32 [scrapy.extensions.telnet] INFO: Telnet Password: b9089b32daa87663
+2024-08-18 16:27:33 [scrapy.middleware] INFO: Enabled extensions:
+['scrapy.extensions.corestats.CoreStats',
+ 'scrapy.extensions.telnet.TelnetConsole',
+ 'scrapy.extensions.memusage.MemoryUsage',
+ 'scrapy.extensions.logstats.LogStats',
+ 'index.middlewares.ProgressBar']
+2024-08-18 16:27:33 [scrapy.crawler] INFO: Overridden settings:
+{'AUTOTHROTTLE_DEBUG': True,
+ 'AUTOTHROTTLE_MAX_DELAY': 30,
+ 'AUTOTHROTTLE_START_DELAY': 0,
+ 'AUTOTHROTTLE_TARGET_CONCURRENCY': 1000,
+ 'BOT_NAME': 'yahoo_bot',
+ 'CONCURRENT_REQUESTS': 1000,
+ 'COOKIES_ENABLED': False,
+ 'FEED_EXPORT_ENCODING': 'utf-8',
+ 'LOG_FILE': 'monitor.log',
+ 'NEWSPIDER_MODULE': 'index.spiders',
+ 'REDIRECT_MAX_TIMES': 5,
+ 'REQUEST_FINGERPRINTER_IMPLEMENTATION': '2.7',
+ 'SPIDER_MODULES': ['index.spiders'],
+ 'TWISTED_REACTOR': 'twisted.internet.asyncioreactor.AsyncioSelectorReactor',
+ 'USER_AGENT': 'Yahoo-Internal-SEO/1.1 (Mozilla/5.0 (Windows NT 10.0; Win64; '
+               'x64; rv:124.0) Gecko 20100101 Firefox/124 +yo/SEO-bot)'}
+2024-08-18 16:27:33 [scrapy.middleware] INFO: Enabled downloader middlewares:
+['scrapy.downloadermiddlewares.offsite.OffsiteMiddleware',
+ 'scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware',
+ 'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware',
+ 'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware',
+ 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware',
+ 'scrapy.downloadermiddlewares.retry.RetryMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware',
+ 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.RedirectMiddleware',
+ 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware',
+ 'scrapy.downloadermiddlewares.stats.DownloaderStats']
+2024-08-18 16:27:33 [scrapy.middleware] INFO: Enabled spider middlewares:
+['scrapy.spidermiddlewares.httperror.HttpErrorMiddleware',
+ 'scrapy.spidermiddlewares.referer.RefererMiddleware',
+ 'scrapy.spidermiddlewares.urllength.UrlLengthMiddleware',
+ 'scrapy.spidermiddlewares.depth.DepthMiddleware']
+2024-08-18 16:27:33 [scrapy.middleware] INFO: Enabled item pipelines:
+['index.pipelines.URLPipeline']
+2024-08-18 16:27:33 [scrapy.core.engine] INFO: Spider opened
+2024-08-18 16:27:33 [scrapy.core.engine] INFO: Closing spider (shutdown)
+2024-08-18 16:27:33 [discover] ERROR: Database connection or cursor is None
+2024-08-18 16:27:33 [scrapy.utils.signal] ERROR: Error caught on signal handler: <bound method CoreStats.spider_closed of <scrapy.extensions.corestats.CoreStats object at 0x7f7bde9eb6b0>>
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/crawler.py", line 160, in crawl
+    yield self.engine.open_spider(self.spider, start_requests)
+psycopg2.OperationalError: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  role "ubuntu" does not exist
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/utils/defer.py", line 348, in maybeDeferred_coro
+    result = f(*args, **kw)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/pydispatch/robustapply.py", line 55, in robustApply
+    return receiver(*arguments, **named)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/extensions/corestats.py", line 30, in spider_closed
+    elapsed_time = finish_time - self.start_time
+TypeError: unsupported operand type(s) for -: 'datetime.datetime' and 'NoneType'
+2024-08-18 16:27:33 [scrapy.statscollectors] INFO: Dumping Scrapy stats:
+{'log_count/DEBUG': 3, 'log_count/ERROR': 2, 'log_count/INFO': 8}
+2024-08-18 16:27:33 [scrapy.core.engine] INFO: Spider closed (shutdown)
+2024-08-18 16:27:33 [twisted] CRITICAL: Unhandled error in Deferred:
+2024-08-18 16:27:33 [twisted] CRITICAL: 
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/twisted/internet/defer.py", line 2003, in _inlineCallbacks
+    result = context.run(gen.send, result)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/crawler.py", line 160, in crawl
+    yield self.engine.open_spider(self.spider, start_requests)
+psycopg2.OperationalError: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  role "ubuntu" does not exist
+
+2024-08-18 16:33:38 [scrapy.utils.log] INFO: Scrapy 2.11.2 started (bot: yahoo_bot)
+2024-08-18 16:33:38 [scrapy.utils.log] INFO: Versions: lxml 5.2.2.0, libxml2 2.12.6, cssselect 1.2.0, parsel 1.9.1, w3lib 2.2.1, Twisted 24.3.0, Python 3.12.3 (main, Jul 31 2024, 17:43:48) [GCC 13.2.0], pyOpenSSL 24.2.1 (OpenSSL 3.3.1 4 Jun 2024), cryptography 43.0.0, Platform Linux-6.8.0-1013-aws-x86_64-with-glibc2.39
+2024-08-18 16:33:38 [scrapy.addons] INFO: Enabled addons:
+[]
+2024-08-18 16:33:38 [asyncio] DEBUG: Using selector: EpollSelector
+2024-08-18 16:33:38 [scrapy.utils.log] DEBUG: Using reactor: twisted.internet.asyncioreactor.AsyncioSelectorReactor
+2024-08-18 16:33:38 [scrapy.utils.log] DEBUG: Using asyncio event loop: asyncio.unix_events._UnixSelectorEventLoop
+2024-08-18 16:33:38 [scrapy.extensions.telnet] INFO: Telnet Password: 66ccd25e271169bd
+2024-08-18 16:33:39 [scrapy.middleware] INFO: Enabled extensions:
+['scrapy.extensions.corestats.CoreStats',
+ 'scrapy.extensions.telnet.TelnetConsole',
+ 'scrapy.extensions.memusage.MemoryUsage',
+ 'scrapy.extensions.logstats.LogStats',
+ 'index.middlewares.ProgressBar']
+2024-08-18 16:33:39 [scrapy.crawler] INFO: Overridden settings:
+{'AUTOTHROTTLE_DEBUG': True,
+ 'AUTOTHROTTLE_MAX_DELAY': 30,
+ 'AUTOTHROTTLE_START_DELAY': 0,
+ 'AUTOTHROTTLE_TARGET_CONCURRENCY': 1000,
+ 'BOT_NAME': 'yahoo_bot',
+ 'CONCURRENT_REQUESTS': 1000,
+ 'COOKIES_ENABLED': False,
+ 'FEED_EXPORT_ENCODING': 'utf-8',
+ 'LOG_FILE': 'monitor.log',
+ 'NEWSPIDER_MODULE': 'index.spiders',
+ 'REDIRECT_MAX_TIMES': 5,
+ 'REQUEST_FINGERPRINTER_IMPLEMENTATION': '2.7',
+ 'SPIDER_MODULES': ['index.spiders'],
+ 'TWISTED_REACTOR': 'twisted.internet.asyncioreactor.AsyncioSelectorReactor',
+ 'USER_AGENT': 'Yahoo-Internal-SEO/1.1 (Mozilla/5.0 (Windows NT 10.0; Win64; '
+               'x64; rv:124.0) Gecko 20100101 Firefox/124 +yo/SEO-bot)'}
+2024-08-18 16:33:39 [scrapy.middleware] INFO: Enabled downloader middlewares:
+['scrapy.downloadermiddlewares.offsite.OffsiteMiddleware',
+ 'scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware',
+ 'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware',
+ 'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware',
+ 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware',
+ 'scrapy.downloadermiddlewares.retry.RetryMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware',
+ 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.RedirectMiddleware',
+ 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware',
+ 'scrapy.downloadermiddlewares.stats.DownloaderStats']
+2024-08-18 16:33:39 [scrapy.middleware] INFO: Enabled spider middlewares:
+['scrapy.spidermiddlewares.httperror.HttpErrorMiddleware',
+ 'scrapy.spidermiddlewares.referer.RefererMiddleware',
+ 'scrapy.spidermiddlewares.urllength.UrlLengthMiddleware',
+ 'scrapy.spidermiddlewares.depth.DepthMiddleware']
+2024-08-18 16:33:39 [scrapy.middleware] INFO: Enabled item pipelines:
+['index.pipelines.URLPipeline']
+2024-08-18 16:33:39 [scrapy.core.engine] INFO: Spider opened
+2024-08-18 16:33:39 [scrapy.core.engine] INFO: Closing spider (shutdown)
+2024-08-18 16:33:39 [discover] ERROR: Database connection or cursor is None
+2024-08-18 16:33:39 [scrapy.utils.signal] ERROR: Error caught on signal handler: <bound method CoreStats.spider_closed of <scrapy.extensions.corestats.CoreStats object at 0x7bf8186318b0>>
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/crawler.py", line 160, in crawl
+    yield self.engine.open_spider(self.spider, start_requests)
+psycopg2.OperationalError: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  role "ubuntu" does not exist
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/utils/defer.py", line 348, in maybeDeferred_coro
+    result = f(*args, **kw)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/pydispatch/robustapply.py", line 55, in robustApply
+    return receiver(*arguments, **named)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/extensions/corestats.py", line 30, in spider_closed
+    elapsed_time = finish_time - self.start_time
+TypeError: unsupported operand type(s) for -: 'datetime.datetime' and 'NoneType'
+2024-08-18 16:33:39 [scrapy.statscollectors] INFO: Dumping Scrapy stats:
+{'log_count/DEBUG': 3, 'log_count/ERROR': 2, 'log_count/INFO': 8}
+2024-08-18 16:33:39 [scrapy.core.engine] INFO: Spider closed (shutdown)
+2024-08-18 16:33:39 [twisted] CRITICAL: Unhandled error in Deferred:
+2024-08-18 16:33:39 [twisted] CRITICAL: 
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/twisted/internet/defer.py", line 2003, in _inlineCallbacks
+    result = context.run(gen.send, result)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/crawler.py", line 160, in crawl
+    yield self.engine.open_spider(self.spider, start_requests)
+psycopg2.OperationalError: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  role "ubuntu" does not exist
+
+2024-08-18 16:37:23 [scrapy.utils.log] INFO: Scrapy 2.11.2 started (bot: yahoo_bot)
+2024-08-18 16:37:23 [scrapy.utils.log] INFO: Versions: lxml 5.2.2.0, libxml2 2.12.6, cssselect 1.2.0, parsel 1.9.1, w3lib 2.2.1, Twisted 24.3.0, Python 3.12.3 (main, Jul 31 2024, 17:43:48) [GCC 13.2.0], pyOpenSSL 24.2.1 (OpenSSL 3.3.1 4 Jun 2024), cryptography 43.0.0, Platform Linux-6.8.0-1013-aws-x86_64-with-glibc2.39
+2024-08-18 16:37:23 [scrapy.addons] INFO: Enabled addons:
+[]
+2024-08-18 16:37:23 [asyncio] DEBUG: Using selector: EpollSelector
+2024-08-18 16:37:23 [scrapy.utils.log] DEBUG: Using reactor: twisted.internet.asyncioreactor.AsyncioSelectorReactor
+2024-08-18 16:37:23 [scrapy.utils.log] DEBUG: Using asyncio event loop: asyncio.unix_events._UnixSelectorEventLoop
+2024-08-18 16:37:23 [scrapy.extensions.telnet] INFO: Telnet Password: 328cacf56bde06e0
+2024-08-18 16:37:23 [scrapy.middleware] INFO: Enabled extensions:
+['scrapy.extensions.corestats.CoreStats',
+ 'scrapy.extensions.telnet.TelnetConsole',
+ 'scrapy.extensions.memusage.MemoryUsage',
+ 'scrapy.extensions.logstats.LogStats',
+ 'index.middlewares.ProgressBar']
+2024-08-18 16:37:23 [scrapy.crawler] INFO: Overridden settings:
+{'AUTOTHROTTLE_DEBUG': True,
+ 'AUTOTHROTTLE_MAX_DELAY': 30,
+ 'AUTOTHROTTLE_START_DELAY': 0,
+ 'AUTOTHROTTLE_TARGET_CONCURRENCY': 1000,
+ 'BOT_NAME': 'yahoo_bot',
+ 'CONCURRENT_REQUESTS': 1000,
+ 'COOKIES_ENABLED': False,
+ 'FEED_EXPORT_ENCODING': 'utf-8',
+ 'LOG_FILE': 'monitor.log',
+ 'NEWSPIDER_MODULE': 'index.spiders',
+ 'REDIRECT_MAX_TIMES': 5,
+ 'REQUEST_FINGERPRINTER_IMPLEMENTATION': '2.7',
+ 'SPIDER_MODULES': ['index.spiders'],
+ 'TWISTED_REACTOR': 'twisted.internet.asyncioreactor.AsyncioSelectorReactor',
+ 'USER_AGENT': 'Yahoo-Internal-SEO/1.1 (Mozilla/5.0 (Windows NT 10.0; Win64; '
+               'x64; rv:124.0) Gecko 20100101 Firefox/124 +yo/SEO-bot)'}
+2024-08-18 16:37:23 [scrapy.middleware] INFO: Enabled downloader middlewares:
+['scrapy.downloadermiddlewares.offsite.OffsiteMiddleware',
+ 'scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware',
+ 'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware',
+ 'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware',
+ 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware',
+ 'scrapy.downloadermiddlewares.retry.RetryMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware',
+ 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.RedirectMiddleware',
+ 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware',
+ 'scrapy.downloadermiddlewares.stats.DownloaderStats']
+2024-08-18 16:37:23 [scrapy.middleware] INFO: Enabled spider middlewares:
+['scrapy.spidermiddlewares.httperror.HttpErrorMiddleware',
+ 'scrapy.spidermiddlewares.referer.RefererMiddleware',
+ 'scrapy.spidermiddlewares.urllength.UrlLengthMiddleware',
+ 'scrapy.spidermiddlewares.depth.DepthMiddleware']
+2024-08-18 16:37:23 [scrapy.middleware] INFO: Enabled item pipelines:
+['index.pipelines.URLPipeline']
+2024-08-18 16:37:23 [scrapy.core.engine] INFO: Spider opened
+2024-08-18 16:37:23 [scrapy.core.engine] INFO: Closing spider (shutdown)
+2024-08-18 16:37:23 [discover] ERROR: Database connection or cursor is None
+2024-08-18 16:37:23 [scrapy.utils.signal] ERROR: Error caught on signal handler: <bound method CoreStats.spider_closed of <scrapy.extensions.corestats.CoreStats object at 0x7a0c562f6030>>
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/crawler.py", line 160, in crawl
+    yield self.engine.open_spider(self.spider, start_requests)
+psycopg2.OperationalError: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  database "ubuntu" does not exist
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/utils/defer.py", line 348, in maybeDeferred_coro
+    result = f(*args, **kw)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/pydispatch/robustapply.py", line 55, in robustApply
+    return receiver(*arguments, **named)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/extensions/corestats.py", line 30, in spider_closed
+    elapsed_time = finish_time - self.start_time
+TypeError: unsupported operand type(s) for -: 'datetime.datetime' and 'NoneType'
+2024-08-18 16:37:23 [scrapy.statscollectors] INFO: Dumping Scrapy stats:
+{'log_count/DEBUG': 3, 'log_count/ERROR': 2, 'log_count/INFO': 8}
+2024-08-18 16:37:23 [scrapy.core.engine] INFO: Spider closed (shutdown)
+2024-08-18 16:37:23 [twisted] CRITICAL: Unhandled error in Deferred:
+2024-08-18 16:37:23 [twisted] CRITICAL: 
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/twisted/internet/defer.py", line 2003, in _inlineCallbacks
+    result = context.run(gen.send, result)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/crawler.py", line 160, in crawl
+    yield self.engine.open_spider(self.spider, start_requests)
+psycopg2.OperationalError: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  database "ubuntu" does not exist
+
+2024-08-18 16:40:49 [scrapy.utils.log] INFO: Scrapy 2.11.2 started (bot: yahoo_bot)
+2024-08-18 16:40:49 [scrapy.utils.log] INFO: Versions: lxml 5.2.2.0, libxml2 2.12.6, cssselect 1.2.0, parsel 1.9.1, w3lib 2.2.1, Twisted 24.3.0, Python 3.12.3 (main, Jul 31 2024, 17:43:48) [GCC 13.2.0], pyOpenSSL 24.2.1 (OpenSSL 3.3.1 4 Jun 2024), cryptography 43.0.0, Platform Linux-6.8.0-1013-aws-x86_64-with-glibc2.39
+2024-08-18 16:40:49 [scrapy.addons] INFO: Enabled addons:
+[]
+2024-08-18 16:40:49 [asyncio] DEBUG: Using selector: EpollSelector
+2024-08-18 16:40:49 [scrapy.utils.log] DEBUG: Using reactor: twisted.internet.asyncioreactor.AsyncioSelectorReactor
+2024-08-18 16:40:49 [scrapy.utils.log] DEBUG: Using asyncio event loop: asyncio.unix_events._UnixSelectorEventLoop
+2024-08-18 16:40:49 [scrapy.extensions.telnet] INFO: Telnet Password: 908e3526976bb2ee
+2024-08-18 16:40:49 [scrapy.middleware] INFO: Enabled extensions:
+['scrapy.extensions.corestats.CoreStats',
+ 'scrapy.extensions.telnet.TelnetConsole',
+ 'scrapy.extensions.memusage.MemoryUsage',
+ 'scrapy.extensions.logstats.LogStats',
+ 'index.middlewares.ProgressBar']
+2024-08-18 16:40:49 [scrapy.crawler] INFO: Overridden settings:
+{'AUTOTHROTTLE_DEBUG': True,
+ 'AUTOTHROTTLE_MAX_DELAY': 30,
+ 'AUTOTHROTTLE_START_DELAY': 0,
+ 'AUTOTHROTTLE_TARGET_CONCURRENCY': 1000,
+ 'BOT_NAME': 'yahoo_bot',
+ 'CONCURRENT_REQUESTS': 1000,
+ 'COOKIES_ENABLED': False,
+ 'FEED_EXPORT_ENCODING': 'utf-8',
+ 'LOG_FILE': 'monitor.log',
+ 'NEWSPIDER_MODULE': 'index.spiders',
+ 'REDIRECT_MAX_TIMES': 5,
+ 'REQUEST_FINGERPRINTER_IMPLEMENTATION': '2.7',
+ 'SPIDER_MODULES': ['index.spiders'],
+ 'TWISTED_REACTOR': 'twisted.internet.asyncioreactor.AsyncioSelectorReactor',
+ 'USER_AGENT': 'Yahoo-Internal-SEO/1.1 (Mozilla/5.0 (Windows NT 10.0; Win64; '
+               'x64; rv:124.0) Gecko 20100101 Firefox/124 +yo/SEO-bot)'}
+2024-08-18 16:40:49 [scrapy.middleware] INFO: Enabled downloader middlewares:
+['scrapy.downloadermiddlewares.offsite.OffsiteMiddleware',
+ 'scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware',
+ 'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware',
+ 'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware',
+ 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware',
+ 'scrapy.downloadermiddlewares.retry.RetryMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware',
+ 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.RedirectMiddleware',
+ 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware',
+ 'scrapy.downloadermiddlewares.stats.DownloaderStats']
+2024-08-18 16:40:49 [scrapy.middleware] INFO: Enabled spider middlewares:
+['scrapy.spidermiddlewares.httperror.HttpErrorMiddleware',
+ 'scrapy.spidermiddlewares.referer.RefererMiddleware',
+ 'scrapy.spidermiddlewares.urllength.UrlLengthMiddleware',
+ 'scrapy.spidermiddlewares.depth.DepthMiddleware']
+2024-08-18 16:40:49 [scrapy.middleware] INFO: Enabled item pipelines:
+['index.pipelines.URLPipeline']
+2024-08-18 16:40:49 [scrapy.core.engine] INFO: Spider opened
+2024-08-18 16:40:49 [scrapy.core.engine] INFO: Closing spider (shutdown)
+2024-08-18 16:40:49 [discover] ERROR: Database connection or cursor is None
+2024-08-18 16:40:49 [scrapy.utils.signal] ERROR: Error caught on signal handler: <bound method CoreStats.spider_closed of <scrapy.extensions.corestats.CoreStats object at 0x70bd75b85a60>>
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/crawler.py", line 160, in crawl
+    yield self.engine.open_spider(self.spider, start_requests)
+psycopg2.OperationalError: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  database "ubuntu" does not exist
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/utils/defer.py", line 348, in maybeDeferred_coro
+    result = f(*args, **kw)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/pydispatch/robustapply.py", line 55, in robustApply
+    return receiver(*arguments, **named)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/extensions/corestats.py", line 30, in spider_closed
+    elapsed_time = finish_time - self.start_time
+TypeError: unsupported operand type(s) for -: 'datetime.datetime' and 'NoneType'
+2024-08-18 16:40:49 [scrapy.statscollectors] INFO: Dumping Scrapy stats:
+{'log_count/DEBUG': 3, 'log_count/ERROR': 2, 'log_count/INFO': 8}
+2024-08-18 16:40:49 [scrapy.core.engine] INFO: Spider closed (shutdown)
+2024-08-18 16:40:49 [twisted] CRITICAL: Unhandled error in Deferred:
+2024-08-18 16:40:49 [twisted] CRITICAL: 
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/twisted/internet/defer.py", line 2003, in _inlineCallbacks
+    result = context.run(gen.send, result)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/crawler.py", line 160, in crawl
+    yield self.engine.open_spider(self.spider, start_requests)
+psycopg2.OperationalError: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  database "ubuntu" does not exist
+
+2024-08-18 16:43:05 [scrapy.utils.log] INFO: Scrapy 2.11.2 started (bot: yahoo_bot)
+2024-08-18 16:43:05 [scrapy.utils.log] INFO: Versions: lxml 5.2.2.0, libxml2 2.12.6, cssselect 1.2.0, parsel 1.9.1, w3lib 2.2.1, Twisted 24.3.0, Python 3.12.3 (main, Jul 31 2024, 17:43:48) [GCC 13.2.0], pyOpenSSL 24.2.1 (OpenSSL 3.3.1 4 Jun 2024), cryptography 43.0.0, Platform Linux-6.8.0-1013-aws-x86_64-with-glibc2.39
+2024-08-18 16:43:05 [scrapy.addons] INFO: Enabled addons:
+[]
+2024-08-18 16:43:05 [asyncio] DEBUG: Using selector: EpollSelector
+2024-08-18 16:43:05 [scrapy.utils.log] DEBUG: Using reactor: twisted.internet.asyncioreactor.AsyncioSelectorReactor
+2024-08-18 16:43:05 [scrapy.utils.log] DEBUG: Using asyncio event loop: asyncio.unix_events._UnixSelectorEventLoop
+2024-08-18 16:43:05 [scrapy.extensions.telnet] INFO: Telnet Password: a6c1955cc53d4b94
+2024-08-18 16:43:05 [scrapy.middleware] INFO: Enabled extensions:
+['scrapy.extensions.corestats.CoreStats',
+ 'scrapy.extensions.telnet.TelnetConsole',
+ 'scrapy.extensions.memusage.MemoryUsage',
+ 'scrapy.extensions.logstats.LogStats',
+ 'index.middlewares.ProgressBar']
+2024-08-18 16:43:05 [scrapy.crawler] INFO: Overridden settings:
+{'AUTOTHROTTLE_DEBUG': True,
+ 'AUTOTHROTTLE_MAX_DELAY': 30,
+ 'AUTOTHROTTLE_START_DELAY': 0,
+ 'AUTOTHROTTLE_TARGET_CONCURRENCY': 1000,
+ 'BOT_NAME': 'yahoo_bot',
+ 'CONCURRENT_REQUESTS': 1000,
+ 'COOKIES_ENABLED': False,
+ 'FEED_EXPORT_ENCODING': 'utf-8',
+ 'LOG_FILE': 'monitor.log',
+ 'NEWSPIDER_MODULE': 'index.spiders',
+ 'REDIRECT_MAX_TIMES': 5,
+ 'REQUEST_FINGERPRINTER_IMPLEMENTATION': '2.7',
+ 'SPIDER_MODULES': ['index.spiders'],
+ 'TWISTED_REACTOR': 'twisted.internet.asyncioreactor.AsyncioSelectorReactor',
+ 'USER_AGENT': 'Yahoo-Internal-SEO/1.1 (Mozilla/5.0 (Windows NT 10.0; Win64; '
+               'x64; rv:124.0) Gecko 20100101 Firefox/124 +yo/SEO-bot)'}
+2024-08-18 16:43:05 [scrapy.middleware] INFO: Enabled downloader middlewares:
+['scrapy.downloadermiddlewares.offsite.OffsiteMiddleware',
+ 'scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware',
+ 'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware',
+ 'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware',
+ 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware',
+ 'scrapy.downloadermiddlewares.retry.RetryMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware',
+ 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.RedirectMiddleware',
+ 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware',
+ 'scrapy.downloadermiddlewares.stats.DownloaderStats']
+2024-08-18 16:43:05 [scrapy.middleware] INFO: Enabled spider middlewares:
+['scrapy.spidermiddlewares.httperror.HttpErrorMiddleware',
+ 'scrapy.spidermiddlewares.referer.RefererMiddleware',
+ 'scrapy.spidermiddlewares.urllength.UrlLengthMiddleware',
+ 'scrapy.spidermiddlewares.depth.DepthMiddleware']
+2024-08-18 16:43:05 [scrapy.middleware] INFO: Enabled item pipelines:
+['index.pipelines.URLPipeline']
+2024-08-18 16:43:05 [scrapy.core.engine] INFO: Spider opened
+2024-08-18 16:43:05 [scrapy.core.engine] INFO: Closing spider (shutdown)
+2024-08-18 16:43:05 [discover] ERROR: Database connection or cursor is None
+2024-08-18 16:43:05 [scrapy.utils.signal] ERROR: Error caught on signal handler: <bound method CoreStats.spider_closed of <scrapy.extensions.corestats.CoreStats object at 0x70ad39847e30>>
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/crawler.py", line 160, in crawl
+    yield self.engine.open_spider(self.spider, start_requests)
+psycopg2.OperationalError: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  database "ubuntu" does not exist
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/utils/defer.py", line 348, in maybeDeferred_coro
+    result = f(*args, **kw)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/pydispatch/robustapply.py", line 55, in robustApply
+    return receiver(*arguments, **named)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/extensions/corestats.py", line 30, in spider_closed
+    elapsed_time = finish_time - self.start_time
+TypeError: unsupported operand type(s) for -: 'datetime.datetime' and 'NoneType'
+2024-08-18 16:43:05 [scrapy.statscollectors] INFO: Dumping Scrapy stats:
+{'log_count/DEBUG': 3, 'log_count/ERROR': 2, 'log_count/INFO': 8}
+2024-08-18 16:43:05 [scrapy.core.engine] INFO: Spider closed (shutdown)
+2024-08-18 16:43:05 [twisted] CRITICAL: Unhandled error in Deferred:
+2024-08-18 16:43:05 [twisted] CRITICAL: 
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/twisted/internet/defer.py", line 2003, in _inlineCallbacks
+    result = context.run(gen.send, result)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/crawler.py", line 160, in crawl
+    yield self.engine.open_spider(self.spider, start_requests)
+psycopg2.OperationalError: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  database "ubuntu" does not exist
+
+2024-08-18 16:43:58 [scrapy.utils.log] INFO: Scrapy 2.11.2 started (bot: yahoo_bot)
+2024-08-18 16:43:58 [scrapy.utils.log] INFO: Versions: lxml 5.2.2.0, libxml2 2.12.6, cssselect 1.2.0, parsel 1.9.1, w3lib 2.2.1, Twisted 24.3.0, Python 3.12.3 (main, Jul 31 2024, 17:43:48) [GCC 13.2.0], pyOpenSSL 24.2.1 (OpenSSL 3.3.1 4 Jun 2024), cryptography 43.0.0, Platform Linux-6.8.0-1013-aws-x86_64-with-glibc2.39
+2024-08-18 16:43:58 [scrapy.addons] INFO: Enabled addons:
+[]
+2024-08-18 16:43:59 [asyncio] DEBUG: Using selector: EpollSelector
+2024-08-18 16:43:59 [scrapy.utils.log] DEBUG: Using reactor: twisted.internet.asyncioreactor.AsyncioSelectorReactor
+2024-08-18 16:43:59 [scrapy.utils.log] DEBUG: Using asyncio event loop: asyncio.unix_events._UnixSelectorEventLoop
+2024-08-18 16:43:59 [scrapy.extensions.telnet] INFO: Telnet Password: c648e330c187c743
+2024-08-18 16:43:59 [scrapy.middleware] INFO: Enabled extensions:
+['scrapy.extensions.corestats.CoreStats',
+ 'scrapy.extensions.telnet.TelnetConsole',
+ 'scrapy.extensions.memusage.MemoryUsage',
+ 'scrapy.extensions.logstats.LogStats',
+ 'index.middlewares.ProgressBar']
+2024-08-18 16:43:59 [scrapy.crawler] INFO: Overridden settings:
+{'AUTOTHROTTLE_DEBUG': True,
+ 'AUTOTHROTTLE_MAX_DELAY': 30,
+ 'AUTOTHROTTLE_START_DELAY': 0,
+ 'AUTOTHROTTLE_TARGET_CONCURRENCY': 1000,
+ 'BOT_NAME': 'yahoo_bot',
+ 'CONCURRENT_REQUESTS': 1000,
+ 'COOKIES_ENABLED': False,
+ 'FEED_EXPORT_ENCODING': 'utf-8',
+ 'LOG_FILE': 'monitor.log',
+ 'NEWSPIDER_MODULE': 'index.spiders',
+ 'REDIRECT_MAX_TIMES': 5,
+ 'REQUEST_FINGERPRINTER_IMPLEMENTATION': '2.7',
+ 'SPIDER_MODULES': ['index.spiders'],
+ 'TWISTED_REACTOR': 'twisted.internet.asyncioreactor.AsyncioSelectorReactor',
+ 'USER_AGENT': 'Yahoo-Internal-SEO/1.1 (Mozilla/5.0 (Windows NT 10.0; Win64; '
+               'x64; rv:124.0) Gecko 20100101 Firefox/124 +yo/SEO-bot)'}
+2024-08-18 16:43:59 [scrapy.middleware] INFO: Enabled downloader middlewares:
+['scrapy.downloadermiddlewares.offsite.OffsiteMiddleware',
+ 'scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware',
+ 'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware',
+ 'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware',
+ 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware',
+ 'scrapy.downloadermiddlewares.retry.RetryMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware',
+ 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.RedirectMiddleware',
+ 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware',
+ 'scrapy.downloadermiddlewares.stats.DownloaderStats']
+2024-08-18 16:43:59 [scrapy.middleware] INFO: Enabled spider middlewares:
+['scrapy.spidermiddlewares.httperror.HttpErrorMiddleware',
+ 'scrapy.spidermiddlewares.referer.RefererMiddleware',
+ 'scrapy.spidermiddlewares.urllength.UrlLengthMiddleware',
+ 'scrapy.spidermiddlewares.depth.DepthMiddleware']
+2024-08-18 16:43:59 [scrapy.middleware] INFO: Enabled item pipelines:
+['index.pipelines.URLPipeline']
+2024-08-18 16:43:59 [scrapy.core.engine] INFO: Spider opened
+2024-08-18 16:43:59 [scrapy.core.engine] INFO: Closing spider (shutdown)
+2024-08-18 16:43:59 [discover] ERROR: Database connection or cursor is None
+2024-08-18 16:43:59 [scrapy.utils.signal] ERROR: Error caught on signal handler: <bound method CoreStats.spider_closed of <scrapy.extensions.corestats.CoreStats object at 0x7d4908291b80>>
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/crawler.py", line 160, in crawl
+    yield self.engine.open_spider(self.spider, start_requests)
+psycopg2.OperationalError: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  database "ubuntu" does not exist
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/utils/defer.py", line 348, in maybeDeferred_coro
+    result = f(*args, **kw)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/pydispatch/robustapply.py", line 55, in robustApply
+    return receiver(*arguments, **named)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/extensions/corestats.py", line 30, in spider_closed
+    elapsed_time = finish_time - self.start_time
+TypeError: unsupported operand type(s) for -: 'datetime.datetime' and 'NoneType'
+2024-08-18 16:43:59 [scrapy.statscollectors] INFO: Dumping Scrapy stats:
+{'log_count/DEBUG': 3, 'log_count/ERROR': 2, 'log_count/INFO': 8}
+2024-08-18 16:43:59 [scrapy.core.engine] INFO: Spider closed (shutdown)
+2024-08-18 16:43:59 [twisted] CRITICAL: Unhandled error in Deferred:
+2024-08-18 16:43:59 [twisted] CRITICAL: 
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/twisted/internet/defer.py", line 2003, in _inlineCallbacks
+    result = context.run(gen.send, result)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/crawler.py", line 160, in crawl
+    yield self.engine.open_spider(self.spider, start_requests)
+psycopg2.OperationalError: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  database "ubuntu" does not exist
+
+2024-08-18 16:45:00 [scrapy.utils.log] INFO: Scrapy 2.11.2 started (bot: yahoo_bot)
+2024-08-18 16:45:00 [scrapy.utils.log] INFO: Versions: lxml 5.2.2.0, libxml2 2.12.6, cssselect 1.2.0, parsel 1.9.1, w3lib 2.2.1, Twisted 24.3.0, Python 3.12.3 (main, Jul 31 2024, 17:43:48) [GCC 13.2.0], pyOpenSSL 24.2.1 (OpenSSL 3.3.1 4 Jun 2024), cryptography 43.0.0, Platform Linux-6.8.0-1013-aws-x86_64-with-glibc2.39
+2024-08-18 16:45:00 [scrapy.addons] INFO: Enabled addons:
+[]
+2024-08-18 16:45:00 [asyncio] DEBUG: Using selector: EpollSelector
+2024-08-18 16:45:00 [scrapy.utils.log] DEBUG: Using reactor: twisted.internet.asyncioreactor.AsyncioSelectorReactor
+2024-08-18 16:45:00 [scrapy.utils.log] DEBUG: Using asyncio event loop: asyncio.unix_events._UnixSelectorEventLoop
+2024-08-18 16:45:00 [scrapy.extensions.telnet] INFO: Telnet Password: b9faa0df346fb46f
+2024-08-18 16:45:00 [scrapy.middleware] INFO: Enabled extensions:
+['scrapy.extensions.corestats.CoreStats',
+ 'scrapy.extensions.telnet.TelnetConsole',
+ 'scrapy.extensions.memusage.MemoryUsage',
+ 'scrapy.extensions.logstats.LogStats',
+ 'index.middlewares.ProgressBar']
+2024-08-18 16:45:00 [scrapy.crawler] INFO: Overridden settings:
+{'AUTOTHROTTLE_DEBUG': True,
+ 'AUTOTHROTTLE_MAX_DELAY': 30,
+ 'AUTOTHROTTLE_START_DELAY': 0,
+ 'AUTOTHROTTLE_TARGET_CONCURRENCY': 1000,
+ 'BOT_NAME': 'yahoo_bot',
+ 'CONCURRENT_REQUESTS': 1000,
+ 'COOKIES_ENABLED': False,
+ 'FEED_EXPORT_ENCODING': 'utf-8',
+ 'LOG_FILE': 'monitor.log',
+ 'NEWSPIDER_MODULE': 'index.spiders',
+ 'REDIRECT_MAX_TIMES': 5,
+ 'REQUEST_FINGERPRINTER_IMPLEMENTATION': '2.7',
+ 'SPIDER_MODULES': ['index.spiders'],
+ 'TWISTED_REACTOR': 'twisted.internet.asyncioreactor.AsyncioSelectorReactor',
+ 'USER_AGENT': 'Yahoo-Internal-SEO/1.1 (Mozilla/5.0 (Windows NT 10.0; Win64; '
+               'x64; rv:124.0) Gecko 20100101 Firefox/124 +yo/SEO-bot)'}
+2024-08-18 16:45:00 [scrapy.middleware] INFO: Enabled downloader middlewares:
+['scrapy.downloadermiddlewares.offsite.OffsiteMiddleware',
+ 'scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware',
+ 'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware',
+ 'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware',
+ 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware',
+ 'scrapy.downloadermiddlewares.retry.RetryMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware',
+ 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.RedirectMiddleware',
+ 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware',
+ 'scrapy.downloadermiddlewares.stats.DownloaderStats']
+2024-08-18 16:45:00 [scrapy.middleware] INFO: Enabled spider middlewares:
+['scrapy.spidermiddlewares.httperror.HttpErrorMiddleware',
+ 'scrapy.spidermiddlewares.referer.RefererMiddleware',
+ 'scrapy.spidermiddlewares.urllength.UrlLengthMiddleware',
+ 'scrapy.spidermiddlewares.depth.DepthMiddleware']
+2024-08-18 16:45:00 [scrapy.middleware] INFO: Enabled item pipelines:
+['index.pipelines.URLPipeline']
+2024-08-18 16:45:00 [scrapy.core.engine] INFO: Spider opened
+2024-08-18 16:45:00 [scrapy.core.engine] INFO: Closing spider (shutdown)
+2024-08-18 16:45:00 [discover] ERROR: Database connection or cursor is None
+2024-08-18 16:45:00 [scrapy.utils.signal] ERROR: Error caught on signal handler: <bound method CoreStats.spider_closed of <scrapy.extensions.corestats.CoreStats object at 0x7f37e2da5c70>>
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/crawler.py", line 160, in crawl
+    yield self.engine.open_spider(self.spider, start_requests)
+psycopg2.OperationalError: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  database "ubuntu" does not exist
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/utils/defer.py", line 348, in maybeDeferred_coro
+    result = f(*args, **kw)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/pydispatch/robustapply.py", line 55, in robustApply
+    return receiver(*arguments, **named)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/extensions/corestats.py", line 30, in spider_closed
+    elapsed_time = finish_time - self.start_time
+TypeError: unsupported operand type(s) for -: 'datetime.datetime' and 'NoneType'
+2024-08-18 16:45:00 [scrapy.statscollectors] INFO: Dumping Scrapy stats:
+{'log_count/DEBUG': 3, 'log_count/ERROR': 2, 'log_count/INFO': 8}
+2024-08-18 16:45:00 [scrapy.core.engine] INFO: Spider closed (shutdown)
+2024-08-18 16:45:00 [twisted] CRITICAL: Unhandled error in Deferred:
+2024-08-18 16:45:00 [twisted] CRITICAL: 
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/twisted/internet/defer.py", line 2003, in _inlineCallbacks
+    result = context.run(gen.send, result)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/crawler.py", line 160, in crawl
+    yield self.engine.open_spider(self.spider, start_requests)
+psycopg2.OperationalError: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  database "ubuntu" does not exist
+
+2024-08-18 16:55:13 [scrapy.utils.log] INFO: Scrapy 2.11.2 started (bot: yahoo_bot)
+2024-08-18 16:55:13 [scrapy.utils.log] INFO: Versions: lxml 5.2.2.0, libxml2 2.12.6, cssselect 1.2.0, parsel 1.9.1, w3lib 2.2.1, Twisted 24.3.0, Python 3.12.3 (main, Jul 31 2024, 17:43:48) [GCC 13.2.0], pyOpenSSL 24.2.1 (OpenSSL 3.3.1 4 Jun 2024), cryptography 43.0.0, Platform Linux-6.8.0-1013-aws-x86_64-with-glibc2.39
+2024-08-18 16:55:13 [scrapy.addons] INFO: Enabled addons:
+[]
+2024-08-18 16:55:13 [asyncio] DEBUG: Using selector: EpollSelector
+2024-08-18 16:55:13 [scrapy.utils.log] DEBUG: Using reactor: twisted.internet.asyncioreactor.AsyncioSelectorReactor
+2024-08-18 16:55:13 [scrapy.utils.log] DEBUG: Using asyncio event loop: asyncio.unix_events._UnixSelectorEventLoop
+2024-08-18 16:55:13 [scrapy.extensions.telnet] INFO: Telnet Password: 5c4165c4c8f7f354
+2024-08-18 16:55:13 [scrapy.middleware] INFO: Enabled extensions:
+['scrapy.extensions.corestats.CoreStats',
+ 'scrapy.extensions.telnet.TelnetConsole',
+ 'scrapy.extensions.memusage.MemoryUsage',
+ 'scrapy.extensions.logstats.LogStats',
+ 'index.middlewares.ProgressBar']
+2024-08-18 16:55:13 [scrapy.crawler] INFO: Overridden settings:
+{'AUTOTHROTTLE_DEBUG': True,
+ 'AUTOTHROTTLE_MAX_DELAY': 30,
+ 'AUTOTHROTTLE_START_DELAY': 0,
+ 'AUTOTHROTTLE_TARGET_CONCURRENCY': 1000,
+ 'BOT_NAME': 'yahoo_bot',
+ 'CONCURRENT_REQUESTS': 1000,
+ 'COOKIES_ENABLED': False,
+ 'FEED_EXPORT_ENCODING': 'utf-8',
+ 'LOG_FILE': 'monitor.log',
+ 'NEWSPIDER_MODULE': 'index.spiders',
+ 'REDIRECT_MAX_TIMES': 5,
+ 'REQUEST_FINGERPRINTER_IMPLEMENTATION': '2.7',
+ 'SPIDER_MODULES': ['index.spiders'],
+ 'TWISTED_REACTOR': 'twisted.internet.asyncioreactor.AsyncioSelectorReactor',
+ 'USER_AGENT': 'Yahoo-Internal-SEO/1.1 (Mozilla/5.0 (Windows NT 10.0; Win64; '
+               'x64; rv:124.0) Gecko 20100101 Firefox/124 +yo/SEO-bot)'}
+2024-08-18 16:55:13 [scrapy.middleware] INFO: Enabled downloader middlewares:
+['scrapy.downloadermiddlewares.offsite.OffsiteMiddleware',
+ 'scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware',
+ 'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware',
+ 'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware',
+ 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware',
+ 'scrapy.downloadermiddlewares.retry.RetryMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware',
+ 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.RedirectMiddleware',
+ 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware',
+ 'scrapy.downloadermiddlewares.stats.DownloaderStats']
+2024-08-18 16:55:13 [scrapy.middleware] INFO: Enabled spider middlewares:
+['scrapy.spidermiddlewares.httperror.HttpErrorMiddleware',
+ 'scrapy.spidermiddlewares.referer.RefererMiddleware',
+ 'scrapy.spidermiddlewares.urllength.UrlLengthMiddleware',
+ 'scrapy.spidermiddlewares.depth.DepthMiddleware']
+2024-08-18 16:55:13 [twisted] CRITICAL: Unhandled error in Deferred:
+2024-08-18 16:55:13 [twisted] CRITICAL: 
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/twisted/internet/defer.py", line 2003, in _inlineCallbacks
+    result = context.run(gen.send, result)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/crawler.py", line 158, in crawl
+    self.engine = self._create_engine()
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/crawler.py", line 172, in _create_engine
+    return ExecutionEngine(self, lambda _: self.stop())
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/core/engine.py", line 101, in __init__
+    self.scraper = Scraper(crawler)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/core/scraper.py", line 109, in __init__
+    self.itemproc: ItemPipelineManager = itemproc_cls.from_crawler(crawler)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/middleware.py", line 90, in from_crawler
+    return cls.from_settings(crawler.settings, crawler)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/middleware.py", line 66, in from_settings
+    mwcls = load_object(clspath)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/utils/misc.py", line 79, in load_object
+    mod = import_module(module)
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/home/ubuntu/crawlzilla_v1/index/index/pipelines.py", line 8, in <module>
+    class URLPipeline:
+  File "/home/ubuntu/crawlzilla_v1/index/index/pipelines.py", line 27, in URLPipeline
+    self.db_cursor = self.db_conn.cursor()
+NameError: name 'self' is not defined
+2024-08-18 16:56:35 [scrapy.utils.log] INFO: Scrapy 2.11.2 started (bot: yahoo_bot)
+2024-08-18 16:56:35 [scrapy.utils.log] INFO: Versions: lxml 5.2.2.0, libxml2 2.12.6, cssselect 1.2.0, parsel 1.9.1, w3lib 2.2.1, Twisted 24.3.0, Python 3.12.3 (main, Jul 31 2024, 17:43:48) [GCC 13.2.0], pyOpenSSL 24.2.1 (OpenSSL 3.3.1 4 Jun 2024), cryptography 43.0.0, Platform Linux-6.8.0-1013-aws-x86_64-with-glibc2.39
+2024-08-18 16:56:35 [scrapy.addons] INFO: Enabled addons:
+[]
+2024-08-18 16:56:35 [asyncio] DEBUG: Using selector: EpollSelector
+2024-08-18 16:56:35 [scrapy.utils.log] DEBUG: Using reactor: twisted.internet.asyncioreactor.AsyncioSelectorReactor
+2024-08-18 16:56:35 [scrapy.utils.log] DEBUG: Using asyncio event loop: asyncio.unix_events._UnixSelectorEventLoop
+2024-08-18 16:56:35 [scrapy.extensions.telnet] INFO: Telnet Password: 734948c699440394
+2024-08-18 16:56:35 [scrapy.middleware] INFO: Enabled extensions:
+['scrapy.extensions.corestats.CoreStats',
+ 'scrapy.extensions.telnet.TelnetConsole',
+ 'scrapy.extensions.memusage.MemoryUsage',
+ 'scrapy.extensions.logstats.LogStats',
+ 'index.middlewares.ProgressBar']
+2024-08-18 16:56:35 [scrapy.crawler] INFO: Overridden settings:
+{'AUTOTHROTTLE_DEBUG': True,
+ 'AUTOTHROTTLE_MAX_DELAY': 30,
+ 'AUTOTHROTTLE_START_DELAY': 0,
+ 'AUTOTHROTTLE_TARGET_CONCURRENCY': 1000,
+ 'BOT_NAME': 'yahoo_bot',
+ 'CONCURRENT_REQUESTS': 1000,
+ 'COOKIES_ENABLED': False,
+ 'FEED_EXPORT_ENCODING': 'utf-8',
+ 'LOG_FILE': 'monitor.log',
+ 'NEWSPIDER_MODULE': 'index.spiders',
+ 'REDIRECT_MAX_TIMES': 5,
+ 'REQUEST_FINGERPRINTER_IMPLEMENTATION': '2.7',
+ 'SPIDER_MODULES': ['index.spiders'],
+ 'TWISTED_REACTOR': 'twisted.internet.asyncioreactor.AsyncioSelectorReactor',
+ 'USER_AGENT': 'Yahoo-Internal-SEO/1.1 (Mozilla/5.0 (Windows NT 10.0; Win64; '
+               'x64; rv:124.0) Gecko 20100101 Firefox/124 +yo/SEO-bot)'}
+2024-08-18 16:56:35 [scrapy.middleware] INFO: Enabled downloader middlewares:
+['scrapy.downloadermiddlewares.offsite.OffsiteMiddleware',
+ 'scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware',
+ 'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware',
+ 'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware',
+ 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware',
+ 'scrapy.downloadermiddlewares.retry.RetryMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware',
+ 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.RedirectMiddleware',
+ 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware',
+ 'scrapy.downloadermiddlewares.stats.DownloaderStats']
+2024-08-18 16:56:35 [scrapy.middleware] INFO: Enabled spider middlewares:
+['scrapy.spidermiddlewares.httperror.HttpErrorMiddleware',
+ 'scrapy.spidermiddlewares.referer.RefererMiddleware',
+ 'scrapy.spidermiddlewares.urllength.UrlLengthMiddleware',
+ 'scrapy.spidermiddlewares.depth.DepthMiddleware']
+2024-08-18 16:56:35 [scrapy.middleware] INFO: Enabled item pipelines:
+['index.pipelines.URLPipeline']
+2024-08-18 16:56:35 [scrapy.core.engine] INFO: Spider opened
+2024-08-18 16:56:35 [scrapy.core.engine] INFO: Closing spider (shutdown)
+2024-08-18 16:56:35 [discover] ERROR: Database connection or cursor is None
+2024-08-18 16:56:35 [scrapy.utils.signal] ERROR: Error caught on signal handler: <bound method CoreStats.spider_closed of <scrapy.extensions.corestats.CoreStats object at 0x73316134d7c0>>
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/crawler.py", line 160, in crawl
+    yield self.engine.open_spider(self.spider, start_requests)
+AttributeError: 'URLPipeline' object has no attribute 'db_host'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/utils/defer.py", line 348, in maybeDeferred_coro
+    result = f(*args, **kw)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/pydispatch/robustapply.py", line 55, in robustApply
+    return receiver(*arguments, **named)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/extensions/corestats.py", line 30, in spider_closed
+    elapsed_time = finish_time - self.start_time
+TypeError: unsupported operand type(s) for -: 'datetime.datetime' and 'NoneType'
+2024-08-18 16:56:35 [scrapy.statscollectors] INFO: Dumping Scrapy stats:
+{'log_count/DEBUG': 3, 'log_count/ERROR': 2, 'log_count/INFO': 8}
+2024-08-18 16:56:35 [scrapy.core.engine] INFO: Spider closed (shutdown)
+2024-08-18 16:56:35 [twisted] CRITICAL: Unhandled error in Deferred:
+2024-08-18 16:56:35 [twisted] CRITICAL: 
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/twisted/internet/defer.py", line 2003, in _inlineCallbacks
+    result = context.run(gen.send, result)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/crawler.py", line 160, in crawl
+    yield self.engine.open_spider(self.spider, start_requests)
+AttributeError: 'URLPipeline' object has no attribute 'db_host'
+2024-08-18 16:57:40 [scrapy.utils.log] INFO: Scrapy 2.11.2 started (bot: yahoo_bot)
+2024-08-18 16:57:40 [scrapy.utils.log] INFO: Versions: lxml 5.2.2.0, libxml2 2.12.6, cssselect 1.2.0, parsel 1.9.1, w3lib 2.2.1, Twisted 24.3.0, Python 3.12.3 (main, Jul 31 2024, 17:43:48) [GCC 13.2.0], pyOpenSSL 24.2.1 (OpenSSL 3.3.1 4 Jun 2024), cryptography 43.0.0, Platform Linux-6.8.0-1013-aws-x86_64-with-glibc2.39
+2024-08-18 16:57:40 [scrapy.addons] INFO: Enabled addons:
+[]
+2024-08-18 16:57:40 [asyncio] DEBUG: Using selector: EpollSelector
+2024-08-18 16:57:40 [scrapy.utils.log] DEBUG: Using reactor: twisted.internet.asyncioreactor.AsyncioSelectorReactor
+2024-08-18 16:57:40 [scrapy.utils.log] DEBUG: Using asyncio event loop: asyncio.unix_events._UnixSelectorEventLoop
+2024-08-18 16:57:40 [scrapy.extensions.telnet] INFO: Telnet Password: c0a0e159800cf1bf
+2024-08-18 16:57:40 [scrapy.middleware] INFO: Enabled extensions:
+['scrapy.extensions.corestats.CoreStats',
+ 'scrapy.extensions.telnet.TelnetConsole',
+ 'scrapy.extensions.memusage.MemoryUsage',
+ 'scrapy.extensions.logstats.LogStats',
+ 'index.middlewares.ProgressBar']
+2024-08-18 16:57:40 [scrapy.crawler] INFO: Overridden settings:
+{'AUTOTHROTTLE_DEBUG': True,
+ 'AUTOTHROTTLE_MAX_DELAY': 30,
+ 'AUTOTHROTTLE_START_DELAY': 0,
+ 'AUTOTHROTTLE_TARGET_CONCURRENCY': 1000,
+ 'BOT_NAME': 'yahoo_bot',
+ 'CONCURRENT_REQUESTS': 1000,
+ 'COOKIES_ENABLED': False,
+ 'FEED_EXPORT_ENCODING': 'utf-8',
+ 'LOG_FILE': 'monitor.log',
+ 'NEWSPIDER_MODULE': 'index.spiders',
+ 'REDIRECT_MAX_TIMES': 5,
+ 'REQUEST_FINGERPRINTER_IMPLEMENTATION': '2.7',
+ 'SPIDER_MODULES': ['index.spiders'],
+ 'TWISTED_REACTOR': 'twisted.internet.asyncioreactor.AsyncioSelectorReactor',
+ 'USER_AGENT': 'Yahoo-Internal-SEO/1.1 (Mozilla/5.0 (Windows NT 10.0; Win64; '
+               'x64; rv:124.0) Gecko 20100101 Firefox/124 +yo/SEO-bot)'}
+2024-08-18 16:57:40 [scrapy.middleware] INFO: Enabled downloader middlewares:
+['scrapy.downloadermiddlewares.offsite.OffsiteMiddleware',
+ 'scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware',
+ 'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware',
+ 'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware',
+ 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware',
+ 'scrapy.downloadermiddlewares.retry.RetryMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware',
+ 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.RedirectMiddleware',
+ 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware',
+ 'scrapy.downloadermiddlewares.stats.DownloaderStats']
+2024-08-18 16:57:40 [scrapy.middleware] INFO: Enabled spider middlewares:
+['scrapy.spidermiddlewares.httperror.HttpErrorMiddleware',
+ 'scrapy.spidermiddlewares.referer.RefererMiddleware',
+ 'scrapy.spidermiddlewares.urllength.UrlLengthMiddleware',
+ 'scrapy.spidermiddlewares.depth.DepthMiddleware']
+2024-08-18 16:57:40 [scrapy.middleware] INFO: Enabled item pipelines:
+['index.pipelines.URLPipeline']
+2024-08-18 16:57:40 [scrapy.core.engine] INFO: Spider opened
+2024-08-18 16:57:40 [scrapy.core.engine] INFO: Closing spider (shutdown)
+2024-08-18 16:57:40 [discover] ERROR: Database connection or cursor is None
+2024-08-18 16:57:40 [scrapy.utils.signal] ERROR: Error caught on signal handler: <bound method CoreStats.spider_closed of <scrapy.extensions.corestats.CoreStats object at 0x7bd035295dc0>>
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/crawler.py", line 160, in crawl
+    yield self.engine.open_spider(self.spider, start_requests)
+psycopg2.OperationalError: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  database "ubuntu" does not exist
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/utils/defer.py", line 348, in maybeDeferred_coro
+    result = f(*args, **kw)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/pydispatch/robustapply.py", line 55, in robustApply
+    return receiver(*arguments, **named)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/extensions/corestats.py", line 30, in spider_closed
+    elapsed_time = finish_time - self.start_time
+TypeError: unsupported operand type(s) for -: 'datetime.datetime' and 'NoneType'
+2024-08-18 16:57:40 [scrapy.statscollectors] INFO: Dumping Scrapy stats:
+{'log_count/DEBUG': 3, 'log_count/ERROR': 2, 'log_count/INFO': 8}
+2024-08-18 16:57:40 [scrapy.core.engine] INFO: Spider closed (shutdown)
+2024-08-18 16:57:40 [twisted] CRITICAL: Unhandled error in Deferred:
+2024-08-18 16:57:40 [twisted] CRITICAL: 
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/twisted/internet/defer.py", line 2003, in _inlineCallbacks
+    result = context.run(gen.send, result)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/crawler.py", line 160, in crawl
+    yield self.engine.open_spider(self.spider, start_requests)
+psycopg2.OperationalError: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  database "ubuntu" does not exist
+
+2024-08-18 17:00:46 [scrapy.utils.log] INFO: Scrapy 2.11.2 started (bot: yahoo_bot)
+2024-08-18 17:00:46 [scrapy.utils.log] INFO: Versions: lxml 5.2.2.0, libxml2 2.12.6, cssselect 1.2.0, parsel 1.9.1, w3lib 2.2.1, Twisted 24.3.0, Python 3.12.3 (main, Jul 31 2024, 17:43:48) [GCC 13.2.0], pyOpenSSL 24.2.1 (OpenSSL 3.3.1 4 Jun 2024), cryptography 43.0.0, Platform Linux-6.8.0-1013-aws-x86_64-with-glibc2.39
+2024-08-18 17:00:46 [scrapy.addons] INFO: Enabled addons:
+[]
+2024-08-18 17:00:46 [asyncio] DEBUG: Using selector: EpollSelector
+2024-08-18 17:00:46 [scrapy.utils.log] DEBUG: Using reactor: twisted.internet.asyncioreactor.AsyncioSelectorReactor
+2024-08-18 17:00:46 [scrapy.utils.log] DEBUG: Using asyncio event loop: asyncio.unix_events._UnixSelectorEventLoop
+2024-08-18 17:00:46 [scrapy.extensions.telnet] INFO: Telnet Password: fbb7825944a35905
+2024-08-18 17:00:46 [scrapy.middleware] INFO: Enabled extensions:
+['scrapy.extensions.corestats.CoreStats',
+ 'scrapy.extensions.telnet.TelnetConsole',
+ 'scrapy.extensions.memusage.MemoryUsage',
+ 'scrapy.extensions.logstats.LogStats',
+ 'index.middlewares.ProgressBar']
+2024-08-18 17:00:46 [scrapy.crawler] INFO: Overridden settings:
+{'AUTOTHROTTLE_DEBUG': True,
+ 'AUTOTHROTTLE_MAX_DELAY': 30,
+ 'AUTOTHROTTLE_START_DELAY': 0,
+ 'AUTOTHROTTLE_TARGET_CONCURRENCY': 1000,
+ 'BOT_NAME': 'yahoo_bot',
+ 'CONCURRENT_REQUESTS': 1000,
+ 'COOKIES_ENABLED': False,
+ 'FEED_EXPORT_ENCODING': 'utf-8',
+ 'LOG_FILE': 'monitor.log',
+ 'NEWSPIDER_MODULE': 'index.spiders',
+ 'REDIRECT_MAX_TIMES': 5,
+ 'REQUEST_FINGERPRINTER_IMPLEMENTATION': '2.7',
+ 'SPIDER_MODULES': ['index.spiders'],
+ 'TWISTED_REACTOR': 'twisted.internet.asyncioreactor.AsyncioSelectorReactor',
+ 'USER_AGENT': 'Yahoo-Internal-SEO/1.1 (Mozilla/5.0 (Windows NT 10.0; Win64; '
+               'x64; rv:124.0) Gecko 20100101 Firefox/124 +yo/SEO-bot)'}
+2024-08-18 17:00:46 [scrapy.middleware] INFO: Enabled downloader middlewares:
+['scrapy.downloadermiddlewares.offsite.OffsiteMiddleware',
+ 'scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware',
+ 'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware',
+ 'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware',
+ 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware',
+ 'scrapy.downloadermiddlewares.retry.RetryMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware',
+ 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.RedirectMiddleware',
+ 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware',
+ 'scrapy.downloadermiddlewares.stats.DownloaderStats']
+2024-08-18 17:00:46 [scrapy.middleware] INFO: Enabled spider middlewares:
+['scrapy.spidermiddlewares.httperror.HttpErrorMiddleware',
+ 'scrapy.spidermiddlewares.referer.RefererMiddleware',
+ 'scrapy.spidermiddlewares.urllength.UrlLengthMiddleware',
+ 'scrapy.spidermiddlewares.depth.DepthMiddleware']
+2024-08-18 17:00:46 [scrapy.middleware] INFO: Enabled item pipelines:
+['index.pipelines.URLPipeline']
+2024-08-18 17:00:46 [scrapy.core.engine] INFO: Spider opened
+2024-08-18 17:00:46 [scrapy.core.engine] INFO: Closing spider (shutdown)
+2024-08-18 17:00:46 [discover] ERROR: Database connection or cursor is None
+2024-08-18 17:00:46 [scrapy.utils.signal] ERROR: Error caught on signal handler: <bound method CoreStats.spider_closed of <scrapy.extensions.corestats.CoreStats object at 0x7a66f6391c10>>
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/crawler.py", line 160, in crawl
+    yield self.engine.open_spider(self.spider, start_requests)
+psycopg2.OperationalError: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  database "ubuntu" does not exist
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/utils/defer.py", line 348, in maybeDeferred_coro
+    result = f(*args, **kw)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/pydispatch/robustapply.py", line 55, in robustApply
+    return receiver(*arguments, **named)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/extensions/corestats.py", line 30, in spider_closed
+    elapsed_time = finish_time - self.start_time
+TypeError: unsupported operand type(s) for -: 'datetime.datetime' and 'NoneType'
+2024-08-18 17:00:46 [scrapy.statscollectors] INFO: Dumping Scrapy stats:
+{'log_count/DEBUG': 3, 'log_count/ERROR': 2, 'log_count/INFO': 8}
+2024-08-18 17:00:46 [scrapy.core.engine] INFO: Spider closed (shutdown)
+2024-08-18 17:00:46 [twisted] CRITICAL: Unhandled error in Deferred:
+2024-08-18 17:00:46 [twisted] CRITICAL: 
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/twisted/internet/defer.py", line 2003, in _inlineCallbacks
+    result = context.run(gen.send, result)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/crawler.py", line 160, in crawl
+    yield self.engine.open_spider(self.spider, start_requests)
+psycopg2.OperationalError: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  database "ubuntu" does not exist
+
+2024-08-18 17:04:45 [scrapy.utils.log] INFO: Scrapy 2.11.2 started (bot: yahoo_bot)
+2024-08-18 17:04:45 [scrapy.utils.log] INFO: Versions: lxml 5.2.2.0, libxml2 2.12.6, cssselect 1.2.0, parsel 1.9.1, w3lib 2.2.1, Twisted 24.3.0, Python 3.12.3 (main, Jul 31 2024, 17:43:48) [GCC 13.2.0], pyOpenSSL 24.2.1 (OpenSSL 3.3.1 4 Jun 2024), cryptography 43.0.0, Platform Linux-6.8.0-1013-aws-x86_64-with-glibc2.39
+2024-08-18 17:04:45 [scrapy.addons] INFO: Enabled addons:
+[]
+2024-08-18 17:04:45 [asyncio] DEBUG: Using selector: EpollSelector
+2024-08-18 17:04:45 [scrapy.utils.log] DEBUG: Using reactor: twisted.internet.asyncioreactor.AsyncioSelectorReactor
+2024-08-18 17:04:45 [scrapy.utils.log] DEBUG: Using asyncio event loop: asyncio.unix_events._UnixSelectorEventLoop
+2024-08-18 17:04:45 [scrapy.extensions.telnet] INFO: Telnet Password: 507cac2b3dabeacc
+2024-08-18 17:04:45 [scrapy.middleware] INFO: Enabled extensions:
+['scrapy.extensions.corestats.CoreStats',
+ 'scrapy.extensions.telnet.TelnetConsole',
+ 'scrapy.extensions.memusage.MemoryUsage',
+ 'scrapy.extensions.logstats.LogStats',
+ 'index.middlewares.ProgressBar']
+2024-08-18 17:04:45 [scrapy.crawler] INFO: Overridden settings:
+{'AUTOTHROTTLE_DEBUG': True,
+ 'AUTOTHROTTLE_MAX_DELAY': 30,
+ 'AUTOTHROTTLE_START_DELAY': 0,
+ 'AUTOTHROTTLE_TARGET_CONCURRENCY': 1000,
+ 'BOT_NAME': 'yahoo_bot',
+ 'CONCURRENT_REQUESTS': 1000,
+ 'COOKIES_ENABLED': False,
+ 'FEED_EXPORT_ENCODING': 'utf-8',
+ 'LOG_FILE': 'monitor.log',
+ 'NEWSPIDER_MODULE': 'index.spiders',
+ 'REDIRECT_MAX_TIMES': 5,
+ 'REQUEST_FINGERPRINTER_IMPLEMENTATION': '2.7',
+ 'SPIDER_MODULES': ['index.spiders'],
+ 'TWISTED_REACTOR': 'twisted.internet.asyncioreactor.AsyncioSelectorReactor',
+ 'USER_AGENT': 'Yahoo-Internal-SEO/1.1 (Mozilla/5.0 (Windows NT 10.0; Win64; '
+               'x64; rv:124.0) Gecko 20100101 Firefox/124 +yo/SEO-bot)'}
+2024-08-18 17:04:45 [scrapy.middleware] INFO: Enabled downloader middlewares:
+['scrapy.downloadermiddlewares.offsite.OffsiteMiddleware',
+ 'scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware',
+ 'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware',
+ 'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware',
+ 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware',
+ 'scrapy.downloadermiddlewares.retry.RetryMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware',
+ 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.RedirectMiddleware',
+ 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware',
+ 'scrapy.downloadermiddlewares.stats.DownloaderStats']
+2024-08-18 17:04:45 [scrapy.middleware] INFO: Enabled spider middlewares:
+['scrapy.spidermiddlewares.httperror.HttpErrorMiddleware',
+ 'scrapy.spidermiddlewares.referer.RefererMiddleware',
+ 'scrapy.spidermiddlewares.urllength.UrlLengthMiddleware',
+ 'scrapy.spidermiddlewares.depth.DepthMiddleware']
+2024-08-18 17:04:45 [scrapy.middleware] INFO: Enabled item pipelines:
+['index.pipelines.URLPipeline']
+2024-08-18 17:04:45 [scrapy.core.engine] INFO: Spider opened
+2024-08-18 17:04:45 [scrapy.core.engine] INFO: Closing spider (shutdown)
+2024-08-18 17:04:45 [discover] ERROR: Database connection or cursor is None
+2024-08-18 17:04:45 [scrapy.utils.signal] ERROR: Error caught on signal handler: <bound method CoreStats.spider_closed of <scrapy.extensions.corestats.CoreStats object at 0x7c5cd0b0e120>>
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/crawler.py", line 160, in crawl
+    yield self.engine.open_spider(self.spider, start_requests)
+psycopg2.OperationalError: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  database "ubuntu" does not exist
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/utils/defer.py", line 348, in maybeDeferred_coro
+    result = f(*args, **kw)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/pydispatch/robustapply.py", line 55, in robustApply
+    return receiver(*arguments, **named)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/extensions/corestats.py", line 30, in spider_closed
+    elapsed_time = finish_time - self.start_time
+TypeError: unsupported operand type(s) for -: 'datetime.datetime' and 'NoneType'
+2024-08-18 17:04:45 [scrapy.statscollectors] INFO: Dumping Scrapy stats:
+{'log_count/DEBUG': 3, 'log_count/ERROR': 2, 'log_count/INFO': 8}
+2024-08-18 17:04:45 [scrapy.core.engine] INFO: Spider closed (shutdown)
+2024-08-18 17:04:45 [twisted] CRITICAL: Unhandled error in Deferred:
+2024-08-18 17:04:45 [twisted] CRITICAL: 
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/twisted/internet/defer.py", line 2003, in _inlineCallbacks
+    result = context.run(gen.send, result)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/crawler.py", line 160, in crawl
+    yield self.engine.open_spider(self.spider, start_requests)
+psycopg2.OperationalError: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  database "ubuntu" does not exist
+
+2024-08-18 17:14:49 [scrapy.utils.log] INFO: Scrapy 2.11.2 started (bot: yahoo_bot)
+2024-08-18 17:14:49 [scrapy.utils.log] INFO: Versions: lxml 5.2.2.0, libxml2 2.12.6, cssselect 1.2.0, parsel 1.9.1, w3lib 2.2.1, Twisted 24.3.0, Python 3.12.3 (main, Jul 31 2024, 17:43:48) [GCC 13.2.0], pyOpenSSL 24.2.1 (OpenSSL 3.3.1 4 Jun 2024), cryptography 43.0.0, Platform Linux-6.8.0-1013-aws-x86_64-with-glibc2.39
+2024-08-18 17:14:49 [scrapy.addons] INFO: Enabled addons:
+[]
+2024-08-18 17:14:49 [asyncio] DEBUG: Using selector: EpollSelector
+2024-08-18 17:14:49 [scrapy.utils.log] DEBUG: Using reactor: twisted.internet.asyncioreactor.AsyncioSelectorReactor
+2024-08-18 17:14:49 [scrapy.utils.log] DEBUG: Using asyncio event loop: asyncio.unix_events._UnixSelectorEventLoop
+2024-08-18 17:14:49 [scrapy.extensions.telnet] INFO: Telnet Password: 44cd6b9811c4183b
+2024-08-18 17:14:49 [scrapy.middleware] INFO: Enabled extensions:
+['scrapy.extensions.corestats.CoreStats',
+ 'scrapy.extensions.telnet.TelnetConsole',
+ 'scrapy.extensions.memusage.MemoryUsage',
+ 'scrapy.extensions.logstats.LogStats',
+ 'index.middlewares.ProgressBar']
+2024-08-18 17:14:49 [scrapy.crawler] INFO: Overridden settings:
+{'AUTOTHROTTLE_DEBUG': True,
+ 'AUTOTHROTTLE_MAX_DELAY': 30,
+ 'AUTOTHROTTLE_START_DELAY': 0,
+ 'AUTOTHROTTLE_TARGET_CONCURRENCY': 1000,
+ 'BOT_NAME': 'yahoo_bot',
+ 'CONCURRENT_REQUESTS': 1000,
+ 'COOKIES_ENABLED': False,
+ 'FEED_EXPORT_ENCODING': 'utf-8',
+ 'LOG_FILE': 'monitor.log',
+ 'NEWSPIDER_MODULE': 'index.spiders',
+ 'REDIRECT_MAX_TIMES': 5,
+ 'REQUEST_FINGERPRINTER_IMPLEMENTATION': '2.7',
+ 'SPIDER_MODULES': ['index.spiders'],
+ 'TWISTED_REACTOR': 'twisted.internet.asyncioreactor.AsyncioSelectorReactor',
+ 'USER_AGENT': 'Yahoo-Internal-SEO/1.1 (Mozilla/5.0 (Windows NT 10.0; Win64; '
+               'x64; rv:124.0) Gecko 20100101 Firefox/124 +yo/SEO-bot)'}
+2024-08-18 17:14:49 [scrapy.middleware] INFO: Enabled downloader middlewares:
+['scrapy.downloadermiddlewares.offsite.OffsiteMiddleware',
+ 'scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware',
+ 'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware',
+ 'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware',
+ 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware',
+ 'scrapy.downloadermiddlewares.retry.RetryMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware',
+ 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.RedirectMiddleware',
+ 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware',
+ 'scrapy.downloadermiddlewares.stats.DownloaderStats']
+2024-08-18 17:14:49 [scrapy.middleware] INFO: Enabled spider middlewares:
+['scrapy.spidermiddlewares.httperror.HttpErrorMiddleware',
+ 'scrapy.spidermiddlewares.referer.RefererMiddleware',
+ 'scrapy.spidermiddlewares.urllength.UrlLengthMiddleware',
+ 'scrapy.spidermiddlewares.depth.DepthMiddleware']
+2024-08-18 17:14:49 [scrapy.middleware] INFO: Enabled item pipelines:
+['index.pipelines.URLPipeline']
+2024-08-18 17:14:49 [scrapy.core.engine] INFO: Spider opened
+2024-08-18 17:14:49 [discover] ERROR: Error connecting to database: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  database "ubuntu" does not exist
+
+2024-08-18 17:14:49 [scrapy.core.engine] INFO: Closing spider (shutdown)
+2024-08-18 17:14:49 [scrapy.utils.signal] ERROR: Error caught on signal handler: <bound method CoreStats.spider_closed of <scrapy.extensions.corestats.CoreStats object at 0x7626ee0a5a00>>
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/crawler.py", line 160, in crawl
+    yield self.engine.open_spider(self.spider, start_requests)
+psycopg2.OperationalError: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  database "ubuntu" does not exist
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/utils/defer.py", line 348, in maybeDeferred_coro
+    result = f(*args, **kw)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/pydispatch/robustapply.py", line 55, in robustApply
+    return receiver(*arguments, **named)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/extensions/corestats.py", line 30, in spider_closed
+    elapsed_time = finish_time - self.start_time
+TypeError: unsupported operand type(s) for -: 'datetime.datetime' and 'NoneType'
+2024-08-18 17:14:49 [scrapy.statscollectors] INFO: Dumping Scrapy stats:
+{'log_count/DEBUG': 3, 'log_count/ERROR': 2, 'log_count/INFO': 8}
+2024-08-18 17:14:49 [scrapy.core.engine] INFO: Spider closed (shutdown)
+2024-08-18 17:14:49 [twisted] CRITICAL: Unhandled error in Deferred:
+2024-08-18 17:14:49 [twisted] CRITICAL: 
+Traceback (most recent call last):
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/twisted/internet/defer.py", line 2003, in _inlineCallbacks
+    result = context.run(gen.send, result)
+  File "/home/ubuntu/venv/lib/python3.12/site-packages/scrapy/crawler.py", line 160, in crawl
+    yield self.engine.open_spider(self.spider, start_requests)
+psycopg2.OperationalError: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  database "ubuntu" does not exist
+
+x

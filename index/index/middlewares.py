@@ -1,12 +1,11 @@
 import os
-import csv
 from rich.console import Console
 from rich.progress import Progress, SpinnerColumn, BarColumn, TextColumn, TimeRemainingColumn
 from scrapy import signals
 from scrapy.exceptions import NotConfigured
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv('/home/ubuntu/crawlzilla_v1/index/config.env')
 
 class ProgressBar:
     def __init__(self, crawler):
