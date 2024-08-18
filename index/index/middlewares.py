@@ -1,72 +1,73 @@
 import os
-from rich.console import Console
-from rich.progress import Progress, SpinnerColumn, BarColumn, TextColumn, TimeRemainingColumn
-from scrapy import signals
-from scrapy.exceptions import NotConfigured
 from dotenv import load_dotenv
+from scrapy import signals
+from itemadapter import is_item, ItemAdapter
 
-load_dotenv('/home/ubuntu/crawlzilla_v1/index/config.env')
+load_dotenv("/home/ubuntu/crawlzilla_v1/index/config.env")
 
-class ProgressBar:
-    def __init__(self, crawler):
-        self.crawler = crawler
-        self.task = None
-        self.progress = None
-        self.console = Console()
-        self.total_urls = 0
-        self.processed_urls = 0
-        self.concurrent_requests = []
+class IndexSpiderMiddleware:
+    # Not all methods need to be defined. If a method is not defined,
+    # scrapy acts as if the spider middleware does not modify the
+    # passed objects.
 
     @classmethod
     def from_crawler(cls, crawler):
-        if not crawler.settings.getbool("PROGRESS_BAR_ENABLED", True):
-            raise NotConfigured
-        
-        extension = cls(crawler)
-        crawler.signals.connect(extension.spider_opened, signal=signals.spider_opened)
-        crawler.signals.connect(extension.spider_closed, signal=signals.spider_closed)
-        crawler.signals.connect(extension.item_scraped, signal=signals.item_scraped)
-        crawler.signals.connect(extension.request_scheduled, signal=signals.request_scheduled)
-        crawler.signals.connect(extension.response_received, signal=signals.response_received)
-        return extension
+        # This method is used by Scrapy to create your spiders.
+        s = cls()
+        crawler.signals.connect(s.spider_opened, signal=signals.spider_opened)
+        return s
+
+    def process_spider_input(self, response, spider):
+        # Called for each response that goes through the spider
+        # middleware and into the spider.
+        return None
+
+    def process_spider_output(self, response, result, spider):
+        # Called with the results returned from the Spider, after
+        # it has processed the response.
+        for i in result:
+            yield i
+
+    def process_spider_exception(self, response, exception, spider):
+        # Called when a spider or process_spider_input() method
+        # raises an exception.
+        pass
+
+    def process_start_requests(self, start_requests, spider):
+        # Called with the start requests of the spider, and works
+        # similarly to the process_spider_output() method, except
+        # that it doesn't have a response associated.
+        for r in start_requests:
+            yield r
 
     def spider_opened(self, spider):
-        self.total_urls = len(list(spider.start_requests()))
-        self.progress = Progress(
-            SpinnerColumn(),
-            TextColumn("[progress.description]{task.description}"),
-            BarColumn(),
-            TextColumn("[progress.percentage]{task.percentage:>3.0f}%"),
-            TextColumn("({task.completed}/{task.total})"),
-            TextColumn("Concurrent: {task.fields[concurrent]}"),
-            TimeRemainingColumn(),
-            console=self.console,
-            transient=True,
-        )
-        self.task = self.progress.add_task("[green]Crawling", total=self.total_urls, concurrent=0)
-        self.progress.start()
+        spider.logger.info('Spider opened: %s' % spider.name)
 
-    def spider_closed(self, spider):
-        if self.progress:
-            self.progress.stop()
-        self.console.print(f"Processed URLs: {self.processed_urls}/{self.total_urls}")
-        if self.concurrent_requests:
-            avg_concurrent = sum(self.concurrent_requests) / len(self.concurrent_requests)
-            self.console.print(f"Average Concurrent Requests: {avg_concurrent:.2f}")
+class IndexDownloaderMiddleware:
+    # Not all methods need to be defined. If a method is not defined,
+    # scrapy acts as if the downloader middleware does not modify the
+    # passed objects.
 
-    def item_scraped(self, item, response, spider):
-        self.processed_urls += 1
-        if self.progress:
-            self.progress.update(self.task, advance=1)
+    @classmethod
+    def from_crawler(cls, crawler):
+        # This method is used by Scrapy to create your spiders.
+        s = cls()
+        crawler.signals.connect(s.spider_opened, signal=signals.spider_opened)
+        return s
 
-    def request_scheduled(self, request, spider):
-        concurrent = len(self.crawler.engine.slot.inprogress)
-        self.concurrent_requests.append(concurrent)
-        if self.progress:
-            self.progress.update(self.task, concurrent=concurrent)
+    def process_request(self, request, spider):
+        # Called for each request that goes through the downloader
+        # middleware.
+        return None
 
-    def response_received(self, response, request, spider):
-        concurrent = len(self.crawler.engine.slot.inprogress)
-        self.concurrent_requests.append(concurrent)
-        if self.progress:
-            self.progress.update(self.task, concurrent=concurrent)
+    def process_response(self, request, response, spider):
+        # Called with the response returned from the downloader.
+        return response
+
+    def process_exception(self, request, exception, spider):
+        # Called when a download handler or a process_request()
+        # (from other downloader middleware) raises an exception.
+        pass
+
+    def spider_opened(self, spider):
+        spider.logger.info('Spider opened: %s' % spider.name)
