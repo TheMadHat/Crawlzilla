@@ -11,16 +11,15 @@ class URLSpider(scrapy.Spider):
     name = "provider"
 
     def __init__(self, url_limit=None, *args, **kwargs):
-        # Initialize other attributes here, but not self.disallowed_subdomains yet
         super(URLSpider, self).__init__(*args, **kwargs)
         self.db_connection = None
         self.db_cursor = None
         self.url_limit = int(url_limit) if url_limit else 0
         self.processed_count = 0
-        self.db_name = os.environ.get('DB_NAME')
-        self.db_user = os.environ.get('DB_USER')
-        self.db_password = os.environ.get('DB_PASSWORD')
-        self.db_host = os.environ.get('DB_HOST')
+        self.db_name = 'provider'
+        self.db_user = 'postgres'
+        self.db_password = 'JollyRoger123'
+        self.db_host = 'localhost'
    
     @classmethod
     def from_crawler(cls, crawler, *args, **kwargs):
@@ -28,7 +27,8 @@ class URLSpider(scrapy.Spider):
         crawler.signals.connect(spider.spider_opened, signal=signals.spider_opened)
         crawler.signals.connect(spider.spider_closed, signal=signals.spider_closed)
         spider.disallowed_subdomains = spider.settings.get('DISALLOWED_SUBDOMAINS', [])
-        spider.log_startup_settings()  # Call log_startup_settings here
+        spider.allowed_subdomain = spider.settings.get('ALLOWED_SUBDOMAIN', None)
+        spider.log_startup_settings()
         return spider
 
     def spider_opened(self, spider):
@@ -36,10 +36,10 @@ class URLSpider(scrapy.Spider):
         self.clear_log_file()
         try:
             self.db_connection = psycopg2.connect(
-                dbname=os.environ.get('DB_NAME'),
-                user=os.environ.get('DB_USER'),
-                password=os.environ.get('DB_PASSWORD'),
-                host=os.environ.get('DB_HOST')
+                dbname='provider',
+                user='postgres',
+                password='JollyRoger123',
+                host='localhost'
             )
             self.db_cursor = self.db_connection.cursor()
         except psycopg2.Error as e:
@@ -56,6 +56,7 @@ class URLSpider(scrapy.Spider):
         log_file = self.settings.get('LOG_FILE', 'monitor.log')
         print(f"Cleared log file: {log_file}")
         print(f"Disallowed Subdomains: {self.disallowed_subdomains}")
+        print(f"Allowed Subdomain: {self.allowed_subdomain}")
         print(f"Concurrency Target: {self.settings.get('CONCURRENT_REQUESTS')}")
         print(f"Batch Size: {self.settings.get('BATCH_SIZE')}")
         print("---------------------------------")
@@ -63,7 +64,6 @@ class URLSpider(scrapy.Spider):
     def spider_closed(self, spider, reason):
         if reason == 'finished':
             self.log_completion_stats()
-        # Always close database connections
         if self.db_cursor:
             self.db_cursor.close()
         if self.db_connection:
@@ -97,8 +97,7 @@ class URLSpider(scrapy.Spider):
             return
 
         try:
-            # Select only unprocessed URLs that are not marked as bad
-            self.db_cursor.execute("SELECT id, url FROM urls WHERE processed = FALSE AND bad_url = FALSE")  
+            self.db_cursor.execute("SELECT id, url FROM urls WHERE processed = False AND bad_url = False")  
             rows = self.db_cursor.fetchall()
 
             for row in rows:
@@ -112,7 +111,6 @@ class URLSpider(scrapy.Spider):
                     self.logger.warning(f"Skipping invalid URL: {url}")
                     continue
 
-                # Correctly check for disallowed subdomains
                 disallowed = False
                 for subdomain in self.disallowed_subdomains:
                     if parsed_url.hostname == subdomain or parsed_url.hostname.endswith("." + subdomain):
@@ -121,6 +119,10 @@ class URLSpider(scrapy.Spider):
 
                 if disallowed:
                     self.logger.info(f"Skipping URL due to disallowed subdomain: {url}")
+                    continue
+
+                if self.allowed_subdomain and not parsed_url.hostname.endswith("." + self.allowed_subdomain):
+                    self.logger.info(f"Skipping URL due to not matching allowed subdomain: {url}")
                     continue
 
                 yield scrapy.Request(url=url, callback=self.parse, meta={'id': row[0]})

@@ -5,11 +5,11 @@ from datetime import datetime, timezone
 from psycopg2 import sql
 
 class ProviderPipeline:
-    def __init__(self, db_host, db_name, db_user, db_password, batch_size=1000):
-        self.db_host = db_host
-        self.db_name = db_name
-        self.db_user = db_user
-        self.db_password = db_password
+    def __init__(self, db_host, db_name, db_user, db_password, batch_size=250):
+        self.db_name = 'provider'
+        self.db_user = 'postgres'
+        self.db_password = 'JollyRoger123'
+        self.db_host = 'localhost'
         self.batch_size = batch_size
         self.processed_ids = []
         self.data = []
@@ -19,11 +19,11 @@ class ProviderPipeline:
     @classmethod
     def from_crawler(cls, crawler):
         return cls(
-            db_host=crawler.settings.get('DB_HOST'),
-            db_name=crawler.settings.get('DB_NAME'),
-            db_user=crawler.settings.get('DB_USER'),
-            db_password=crawler.settings.get('DB_PASSWORD'),
-            batch_size=crawler.settings.getint('BATCH_SIZE', 1000)
+            db_host='localhost',
+            db_name='provider',
+            db_user='postgres',
+            db_password='JollyRoger123',
+            batch_size=crawler.settings.getint('BATCH_SIZE', 250)
         )
 
     def open_spider(self, spider):
@@ -61,10 +61,6 @@ class ProviderPipeline:
             spider.logger.info("No data to insert.")
             return
 
-        if not item['url']:
-            spider.logger.warning("Skipping item with invalid or None URL")
-            return
-
         try:
             # Insert into master table
             insert_query = sql.SQL("""
@@ -76,6 +72,7 @@ class ProviderPipeline:
                     timestamp = EXCLUDED.timestamp
             """)
             execute_batch(self.db_cursor, insert_query, self.data)
+            print(f"Inserted {len(self.data)} rows into the table.")
 
             # Update processed status in urls table
             for i in range(0, len(self.data), self.batch_size):
@@ -88,6 +85,8 @@ class ProviderPipeline:
                 self.db_cursor.execute(update_query, (batch_ids,))
                 self.db_conn.commit()
                 spider.logger.info(f"Marked {len(batch_ids)} URLs as processed in 'urls' table.")
+                print(f"Updated {len(batch_ids)} rows into the table.")
+
 
             self.data.clear()
 

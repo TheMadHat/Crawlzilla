@@ -8,7 +8,7 @@ LOG_FORMATTER = "scrapy.logformatter.LogFormatter"
 LOG_FORMAT = "%(asctime)s [%(name)s] %(levelname)s: %(message)s"
 LOG_DATEFORMAT = "%Y-%m-%d %H:%M:%S"
 LOG_STDOUT = False
-LOG_LEVEL = "DEBUG"
+LOG_LEVEL = "ERROR"
 LOG_FILE = "monitor.log"
 
 EXTENSIONS = {
@@ -19,13 +19,14 @@ ITEM_PIPELINES = {
     'provider.pipelines.ProviderPipeline': 300,
 }
 
-DB_HOST = os.environ.get('DB_HOST')
-DB_NAME = os.environ.get('DB_NAME')
-DB_USER = os.environ.get('DB_USER')
-DB_PASSWORD = os.environ.get('DB_PASSWORD')
-BATCH_SIZE = 1000
+DB_HOST = 'localhost'
+DB_NAME = 'provider'
+DB_USER = 'postgres'
+DB_PASSWORD = 'JollyRoger123'
+BATCH_SIZE = 250
 
-DISALLOWED_SUBDOMAINS = ['finance.yahoo.com']
+ALLOWED_SUBDOMAIN = ['finance.yahoo.com']
+#DISALLOWED_SUBDOMAINS = ['finance.yahoo.com']
 
 
 PROGRESS_BAR_ENABLED = True
@@ -47,12 +48,12 @@ COOKIES_ENABLED = False
 REDIRECT_ENABLED = True
 REDIRECT_MAX_TIMES = 5
 
-CONCURRENT_REQUESTS = 1000
+CONCURRENT_REQUESTS = 500
 
-AUTOTHROTTLE_ENABLED = False
+AUTOTHROTTLE_ENABLED = True
 AUTOTHROTTLE_START_DELAY = 0
 AUTOTHROTTLE_MAX_DELAY = 30
-AUTOTHROTTLE_TARGET_CONCURRENCY = 1000
+AUTOTHROTTLE_TARGET_CONCURRENCY = 500
 AUTOTHROTTLE_DEBUG = True
 
 HTTPCACHE_ENABLED = False
