@@ -1,19 +1,36 @@
+import os
 import scrapy
 from scrapy.linkextractors import LinkExtractor
+from scrapy.exceptions import CloseSpider
 from urllib.parse import urlparse, urlunparse
 import psycopg2
 from psycopg2 import sql
 from dotenv import load_dotenv
+from rich.progress import Progress, SpinnerColumn, TextColumn, BarColumn, TimeRemainingColumn
+from rich.console import Console 
 
 load_dotenv("/home/ubuntu/crawlzilla_v1/index/config.env")
 
 class YahooSpider(scrapy.Spider):
     name = "discover"
     allowed_domains = ['yahoo.com']
-    start_urls = [os.getenv("START_URL")]
 
     def __init__(self, *args, **kwargs):
         super(YahooSpider, self).__init__(*args, **kwargs)
+        self.start_urls = ['https://www.yahoo.com']
+
+    def start_requests(self):
+        for url in self.start_urls:
+            yield scrapy.Request(url=url, callback=self.parse, dont_filter=True)
+
+    @classmethod
+    def from_crawler(cls, crawler, *args, **kwargs):
+        spider = super(YahooSpider, cls).from_crawler(crawler, *args, **kwargs)
+        spider.setup(crawler.settings)
+        return spider
+
+    def setup(self, settings):
+        self.total_urls = settings.getint("URL_LIMIT", 1000)
         self.conn = psycopg2.connect(
             dbname=os.getenv("DB_NAME"),
             user=os.getenv("DB_USER"),
@@ -21,19 +38,39 @@ class YahooSpider(scrapy.Spider):
             host=os.getenv("HOST"),
         )
         self.cur = self.conn.cursor()
+        self.console = Console()
+        self.progress = Progress(
+            SpinnerColumn(),
+            TextColumn("[progress.description]{task.description}"),
+            BarColumn(),
+            TextColumn("[progress.percentage]{task.percentage:>3.0f}%"),
+            TextColumn("({task.completed}/{task.total})"),
+            TextColumn("Concurrent: {task.fields[concurrent]}"),
+            TimeRemainingColumn(),
+            console=self.console,
+        )
+        self.task = self.progress.add_task(
+            "[green]Crawling", total=self.total_urls, concurrent=0
+        )
+        self.progress.start()
 
     def parse(self, response):
-        link_extractor = LinkExtractor(allow=r'\.html$')
+        link_extractor = LinkExtractor(allow_domains=self.allowed_domains)
         links = link_extractor.extract_links(response)
+
+        concurrent = len(self.crawler.engine.slot.scheduler)
+        self.progress.update(self.task, advance=1, concurrent=concurrent)
 
         for link in links:
             url, priority = self.process_url(link.url)
             self.store_in_db(url, priority)
-            yield scrapy.Request(link.url, callback=self.parse, priority=priority)
+            yield scrapy.Request(url, callback=self.parse, priority=priority)
+
+        if self.progress.tasks[self.task].completed >= self.total_urls:
+            raise CloseSpider(reason='URL limit reached')
 
     def process_url(self, url):
         parsed_url = urlparse(url)
-        # Strip parameters and fragments
         clean_url = urlunparse(parsed_url._replace(query="", fragment=""))
         priority = self.determine_priority(parsed_url.path)
         if parsed_url.query:
@@ -41,19 +78,8 @@ class YahooSpider(scrapy.Spider):
         return clean_url, priority
 
     def determine_priority(self, path):
-        if path.endswith('.html'):
-            return 0
         depth = path.count('/')
-        if depth == 1:
-            return 1
-        elif depth == 2:
-            return 2
-        elif depth == 3:
-            return 3
-        elif depth == 4:
-            return 4
-        else:
-            return 5
+        return min(depth, 5)
 
     def store_in_db(self, url, priority):
         try:
@@ -78,5 +104,6 @@ class YahooSpider(scrapy.Spider):
             self.conn.rollback()
 
     def close(self, reason):
+        self.progress.stop()
         self.cur.close()
         self.conn.close()
