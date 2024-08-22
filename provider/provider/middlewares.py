@@ -34,7 +34,7 @@ class ProgressBar:
             TextColumn("[progress.description]{task.description}"),
             BarColumn(),
             TextColumn("[progress.percentage]{task.percentage:>3.0f}%"),
-            TextColumn("({task.completed}/"),
+            TextColumn("Processed: {task.completed}"),
             TextColumn("Concurrent: {task.fields[concurrent]}"),
             TimeRemainingColumn(),
             console=self.console,

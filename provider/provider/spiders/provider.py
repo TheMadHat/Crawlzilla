@@ -27,7 +27,7 @@ class URLSpider(scrapy.Spider):
         crawler.signals.connect(spider.spider_opened, signal=signals.spider_opened)
         crawler.signals.connect(spider.spider_closed, signal=signals.spider_closed)
         spider.disallowed_subdomains = spider.settings.get('DISALLOWED_SUBDOMAINS', [])
-        spider.allowed_subdomain = spider.settings.get('ALLOWED_SUBDOMAIN', None)
+        spider.allowed_subdomain = spider.settings.get('ALLOWED_SUBDOMAIN', [])
         spider.log_startup_settings()
         return spider
 
@@ -121,7 +121,7 @@ class URLSpider(scrapy.Spider):
                     self.logger.info(f"Skipping URL due to disallowed subdomain: {url}")
                     continue
 
-                if self.allowed_subdomain and not parsed_url.hostname.endswith("." + self.allowed_subdomain):
+                if self.allowed_subdomain and not any(parsed_url.hostname.endswith("." + subdomain) for subdomain in self.allowed_subdomain):
                     self.logger.info(f"Skipping URL due to not matching allowed subdomain: {url}")
                     continue
 

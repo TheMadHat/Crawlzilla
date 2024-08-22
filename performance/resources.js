@@ -6,7 +6,7 @@ const { Parser } = require('json2csv');
   const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
   const page = await browser.newPage();
 
-  const url = 'https://www.engadget.com/best-wireless-earbuds-120058222.html'; 
+  const url = 'https://www.engadget.com/best-wireless-earbuds-120058222.html?feature.getCommerceModulesFromRmp=1'; 
   await page.goto(url);
 
   const performanceMetrics = await page.evaluate(() => {
@@ -31,7 +31,7 @@ const { Parser } = require('json2csv');
   const csv = parser.parse(combinedMetrics);
 
   // Write CSV to a file
-  fs.writeFileSync('performance_metrics.csv', csv);
+  //fs.writeFileSync('performance_metrics.csv', csv);
 
   console.log('Performance metrics saved to performance_metrics.csv');
 
