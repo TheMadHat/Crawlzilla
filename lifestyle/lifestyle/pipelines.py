@@ -4,9 +4,9 @@ from psycopg2.extras import execute_batch
 from datetime import datetime, timezone
 from psycopg2 import sql
 
-class ProviderPipeline:
+class LifestylePipeline:
     def __init__(self, db_host, db_name, db_user, db_password, batch_size=250):
-        self.db_name = 'provider'
+        self.db_name = 'lifestyle'
         self.db_user = 'postgres'
         self.db_password = 'JollyRoger123'
         self.db_host = 'localhost'
@@ -20,7 +20,7 @@ class ProviderPipeline:
     def from_crawler(cls, crawler):
         return cls(
             db_host='localhost',
-            db_name='provider',
+            db_name='lifestlye',
             db_user='postgres',
             db_password='JollyRoger123',
             batch_size=crawler.settings.getint('BATCH_SIZE', 250)
@@ -64,7 +64,7 @@ class ProviderPipeline:
         try:
             # Insert into master table
             insert_query = sql.SQL("""
-                INSERT INTO master (id, url, provider, timestamp)
+                INSERT INTO one_p (id, url, provider, timestamp)
                 VALUES (%s, %s, %s, %s)
                 ON CONFLICT (id) DO UPDATE SET
                     url = EXCLUDED.url,
@@ -86,7 +86,6 @@ class ProviderPipeline:
                 self.db_conn.commit()
                 spider.logger.info(f"Marked {len(batch_ids)} URLs as processed in 'urls' table.")
                 print(f"Updated {len(batch_ids)} rows into the table.")
-
 
             self.data.clear()
 

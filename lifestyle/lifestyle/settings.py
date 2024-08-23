@@ -24,7 +24,7 @@ DB_USER = 'postgres'
 DB_PASSWORD = 'JollyRoger123'
 BATCH_SIZE = 250
 
-ALLOWED_SUBDOMAIN = []
+ALLOWED_SUBDOMAIN = [www.yahoo.com]
 DISALLOWED_SUBDOMAINS = []
 
 
