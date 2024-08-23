@@ -127,7 +127,8 @@ class URLSpider(scrapy.Spider):
                     self.logger.info(f"Skipping URL due to not matching allowed subdomain: {url}")
                     continue
 
-                yield scrapy.Request(url=url, callback=self.parse, meta={'id': row[0]})
+                for row in rows:
+                    yield scrapy.Request(url=row[1], callback=self.parse, meta={'id': row[0]})
 
         except psycopg2.Error as e:
             self.logger.error(f"Database query failed: {e}")
@@ -145,6 +146,18 @@ class URLSpider(scrapy.Spider):
                 'url': response.url,
                 'provider': provider
             }
+
+        current_timestamp = datetime.now()
+
+        try:
+            self.db_cursor.execute(
+                "UPDATE urls SET processed = True, last_processed = %s WHERE id = %s",
+                (current_timestamp, response.meta['id'])
+            )
+            self.db_connection.commit()
+        except psycopg2.Error as e:
+            self.logger.error(f"Failed to update urls table: {e}")
+            self.db_connection.rollback()
 
         self.processed_count += 1
         if self.url_limit and self.processed_count >= self.url_limit:

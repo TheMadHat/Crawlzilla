@@ -44,10 +44,14 @@ class LifestylePipeline:
 
     def process_item(self, item, spider):
         timestamp = datetime.now(timezone.utc)
-        self.data.append((item['id'], item['url'], item['provider'], timestamp))
-        self.processed_ids.append(item['id'])  # Add ID to processed IDs list
+        data = (item['id'], item['url'], item['provider'], timestamp)
+        
+        if "Yahoo" in item['provider']:
+            self.one_p_data.append(data)
+        else:
+            self.three_p_data.append(data)
 
-        if len(self.data) >= self.batch_size:
+        if len(self.one_p_data) + len(self.three_p_data) >= self.batch_size:
             self.insert_data(spider)
 
         return item
@@ -62,32 +66,35 @@ class LifestylePipeline:
             return
 
         try:
-            # Insert into master table
-            insert_query = sql.SQL("""
-                INSERT INTO one_p (id, url, provider, timestamp)
-                VALUES (%s, %s, %s, %s)
-                ON CONFLICT (id) DO UPDATE SET
-                    url = EXCLUDED.url,
-                    provider = EXCLUDED.provider,
-                    timestamp = EXCLUDED.timestamp
-            """)
-            execute_batch(self.db_cursor, insert_query, self.data)
-            print(f"Inserted {len(self.data)} rows into the table.")
-
-            # Update processed status in urls table
-            for i in range(0, len(self.data), self.batch_size):
-                batch_ids = [item[0] for item in self.data[i:i + self.batch_size]]
-                update_query = sql.SQL("""
-                    UPDATE urls
-                    SET processed = TRUE
-                    WHERE id IN (SELECT unnest FROM UNNEST(%s))
+            # Insert into one_p table
+            if self.one_p_data:
+                insert_query = sql.SQL("""
+                    INSERT INTO one_p (id, url, provider, timestamp)
+                    VALUES (%s, %s, %s, %s)
+                    ON CONFLICT (id) DO UPDATE SET
+                        url = EXCLUDED.url,
+                        provider = EXCLUDED.provider,
+                        timestamp = EXCLUDED.timestamp
                 """)
-                self.db_cursor.execute(update_query, (batch_ids,))
-                self.db_conn.commit()
-                spider.logger.info(f"Marked {len(batch_ids)} URLs as processed in 'urls' table.")
-                print(f"Updated {len(batch_ids)} rows into the table.")
+                execute_batch(self.db_cursor, insert_query, self.one_p_data)
+                spider.logger.info(f"Inserted {len(self.one_p_data)} rows into one_p table.")
+                self.one_p_data.clear()
 
-            self.data.clear()
+            # Insert into three_p table
+            if self.three_p_data:
+                insert_query = sql.SQL("""
+                    INSERT INTO three_p (id, url, provider, timestamp)
+                    VALUES (%s, %s, %s, %s)
+                    ON CONFLICT (id) DO UPDATE SET
+                        url = EXCLUDED.url,
+                        provider = EXCLUDED.provider,
+                        timestamp = EXCLUDED.timestamp
+                """)
+                execute_batch(self.db_cursor, insert_query, self.three_p_data)
+                spider.logger.info(f"Inserted {len(self.three_p_data)} rows into three_p table.")
+                self.three_p_data.clear()
+
+            self.db_conn.commit()
 
         except Exception as e:
             self.db_conn.rollback()
