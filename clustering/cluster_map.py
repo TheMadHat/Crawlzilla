@@ -6,7 +6,7 @@ def perform_clustering(processed_keywords, num_clusters=20):
     Perform K-Means clustering on the processed keywords.
     """
     print("Vectorizing keywords with TF-IDF...")
-    vectorizer = TfidfVectorizer(max_features=1000)
+    vectorizer = TfidfVectorizer(max_features=500)
     X = vectorizer.fit_transform(processed_keywords)
     
     print("Performing K-Means clustering...")
