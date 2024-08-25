@@ -12,7 +12,8 @@ class LifestylePipeline:
         self.db_host = 'localhost'
         self.batch_size = batch_size
         self.processed_ids = []
-        self.data = []
+        self.one_p_data = []
+        self.three_p_data = []
         self.db_conn = None
         self.db_cursor = None
 
@@ -61,7 +62,7 @@ class LifestylePipeline:
             spider.logger.error("Database connection or cursor is None")
             return
 
-        if not self.data:
+        if not self.one_p_data and not self.three_p_data:
             spider.logger.info("No data to insert.")
             return
 

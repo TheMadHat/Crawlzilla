@@ -1,13 +1,12 @@
 import os
 
-
 LOG_ENABLED = True
 LOG_ENCODING = "utf-8"
 LOG_FORMATTER = "scrapy.logformatter.LogFormatter"
 LOG_FORMAT = "%(asctime)s [%(name)s] %(levelname)s: %(message)s"
 LOG_DATEFORMAT = "%Y-%m-%d %H:%M:%S"
 LOG_STDOUT = False
-LOG_LEVEL = "ERROR"
+LOG_LEVEL = "DEBUG"
 LOG_FILE = "monitor.log"
 
 EXTENSIONS = {
@@ -15,16 +14,15 @@ EXTENSIONS = {
 }
 
 ITEM_PIPELINES = {
-    'lifestyle.pipelines.Lifestyle.Pipeline': 300,
+    'lifestyle.pipelines.LifestylePipeline': 300,
 }
-
 DB_HOST = 'localhost'
 DB_NAME = 'lifestyle'
 DB_USER = 'postgres'
 DB_PASSWORD = 'JollyRoger123'
 BATCH_SIZE = 250
 
-ALLOWED_SUBDOMAIN = [www.yahoo.com]
+ALLOWED_SUBDOMAIN = []
 DISALLOWED_SUBDOMAINS = []
 
 
