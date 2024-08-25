@@ -1,7 +1,7 @@
 import spacy
 
 # Load the spaCy English model
-nlp = spacy.load('en_core_web_sm')
+nlp = spacy.load('en_core_web_lg')
 
 def extract_category(text):
     """Extracts the base product category from a text string.
