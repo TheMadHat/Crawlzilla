@@ -15,7 +15,7 @@ EXTENSIONS = {
 }
 
 ITEM_PIPELINES = {
-    'finance.pipelines.FinancePipeline': 300,
+    'finance.pipelines.Pipeline': 300,
 }
 
 DB_HOST = 'localhost'
