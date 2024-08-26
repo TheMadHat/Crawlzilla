@@ -4,20 +4,21 @@ from scrapy import signals
 from urllib.parse import urlparse
 from datetime import datetime
 
+from psycopg2.pool import ThreadedConnectionPool
+
 class URLSpider(scrapy.Spider):
     name = "sorter"
 
     def __init__(self, url_limit=None, *args, **kwargs):
         super(URLSpider, self).__init__(*args, **kwargs)
-        self.db_connection = None
-        self.db_cursor = None
+        self.db_pool = None 
         self.url_limit = int(url_limit) if url_limit else None
         self.processed_count = 0
         self.db_name = 'lifestyle'
         self.db_user = 'postgres'
         self.db_password = 'JollyRoger123'
         self.db_host = 'localhost'
-   
+
     @classmethod
     def from_crawler(cls, crawler, *args, **kwargs):
         spider = super(URLSpider, cls).from_crawler(crawler, *args, **kwargs)
@@ -32,15 +33,16 @@ class URLSpider(scrapy.Spider):
         self.start_time = datetime.now()
         self.clear_log_file()
         try:
-            self.db_connection = psycopg2.connect(
+            self.db_pool = ThreadedConnectionPool(
+                minconn=1,
+                maxconn=40,  # Adjust as needed
                 dbname=self.db_name,
                 user=self.db_user,
                 password=self.db_password,
                 host=self.db_host
             )
-            self.db_cursor = self.db_connection.cursor()
-            self.logger.info("Successfully connected to the database")
-            print("Successfully connected to the database")
+            self.logger.info("Successfully connected to the database pool")
+            print("Successfully connected to the database pool")
         except psycopg2.Error as e:
             self.logger.error(f"Failed to connect to database: {e}")
             print(f"Failed to connect to database: {e}")
@@ -49,10 +51,8 @@ class URLSpider(scrapy.Spider):
     def spider_closed(self, spider, reason):
         if reason == 'finished':
             self.log_completion_stats()
-        if self.db_cursor:
-            self.db_cursor.close()
-        if self.db_connection:
-            self.db_connection.close()
+        if self.db_pool:
+            self.db_pool.closeall()
         self.logger.info(f"Spider closed: {reason}")
         print(f"Spider closed: {reason}")
 
@@ -94,39 +94,55 @@ class URLSpider(scrapy.Spider):
         print(f"Processed: {stats.get('item_scraped_count', 0)}")
 
     def start_requests(self):
-        try:
-            self.logger.info("Starting to fetch URLs from the database")
-            print("Starting to fetch URLs from the database")
-            self.db_cursor.execute("SELECT COUNT(*) FROM urls WHERE processed = False")
-            count = self.db_cursor.fetchone()[0]
-            self.logger.info(f"Found {count} unprocessed URLs in the database")
-            print(f"Found {count} unprocessed URLs in the database")
-            limit_clause = f" LIMIT {self.url_limit}" if self.url_limit else ""
-            self.db_cursor.execute(f"SELECT id, url FROM urls WHERE processed = False{limit_clause}")
-            rows = self.db_cursor.fetchall()
+        chunk_size = 100
+        offset = 0
+        chunk_counter = 0
 
-            if not rows:
-                self.logger.warning("No unprocessed URLs found in the database")
-                print("No unprocessed URLs found in the database")
-                return
+        while True:
+            chunk_counter += 1
+            self.logger.info(f"Fetching chunk {chunk_counter}, offset: {offset}")
 
-            for row in rows:
-                url = row[1]
-                parsed_url = urlparse(url)
-                if parsed_url.hostname is None:
-                    self.logger.warning(f"Skipping invalid URL: {url}")
-                    continue
+            try:
+                with self.db_pool.getconn() as self.db_conn:
+                    self.logger.info(f"Obtained connection {self.db_conn} from pool in chunk {chunk_counter}")
+                    with self.db_conn.cursor() as self.db_cursor:
+                        self.db_cursor.execute(f"""
+                            SELECT id, url
+                            FROM urls
+                            WHERE NOT EXISTS (
+                                SELECT 1
+                                FROM processed_urls
+                                WHERE processed_urls.url = urls.url
+                            )
+                            LIMIT {chunk_size} OFFSET {offset}
+                        """)
+                        rows = self.db_cursor.fetchall()
+                        self.logger.info(f"Fetched {len(rows)} rows in chunk {chunk_counter}")
 
-                if not url.startswith('http://') and not url.startswith('https://'):
-                    url = 'https://' + url
+                self.logger.info(f"Released connection {self.db_conn} after chunk {chunk_counter}")  # Log release
 
-                self.logger.info(f"Requesting URL: {url}")
-                yield scrapy.Request(url=url, callback=self.parse, meta={'id': row[0]})
+                if not rows:
+                    break
 
-        except psycopg2.Error as e:
-            self.logger.error(f"Database query failed: {e}")
-            print(f"Database query failed: {e}")
-            raise
+                for row in rows:
+                    url = row[1]
+                    parsed_url = urlparse(url)
+                    if parsed_url.hostname is None:
+                        self.logger.warning(f"Skipping invalid URL: {url}")
+                        continue
+
+                    if not url.startswith('http://') and not url.startswith('https://'):
+                        url = 'https://' + url
+
+                    self.logger.info(f"Requesting URL: {url}")
+                    yield scrapy.Request(url=url, callback=self.parse, meta={'id': row[0], 'url': url}, dont_filter=True)
+
+                offset += chunk_size
+
+            except psycopg2.Error as e:
+                self.logger.error(f"Database query failed: {e}")
+                print(f"Database query failed: {e}")
+                raise
 
     def parse(self, response):
         self.logger.info(f"Parsing response from {response.url}")
@@ -138,23 +154,28 @@ class URLSpider(scrapy.Spider):
             provider = text.strip()
             yield {
                 'id': response.meta['id'],
-                'url': response.url,
+                'url': response.meta['url'],
                 'provider': provider
             }
 
         try:
-            self.db_cursor.execute(
-                "UPDATE urls SET processed = True WHERE id = %s",
-                (response.meta['id'],)
-            )
-            self.db_connection.commit()
-            self.logger.info(f"Updated URL with id {response.meta['id']} as processed")
+            with self.db_pool.getconn() as self.db_conn:
+                with self.db_conn.cursor() as self.db_cursor:                    
+                    self.db_cursor.execute(
+                        "INSERT INTO processed_urls (url) VALUES (%s)",
+                        (response.meta['url'],) 
+                    )
+                    self.db_conn.commit()
+                    self.logger.info(f"Marked URL as processed: {response.meta['url']}")
+
         except psycopg2.Error as e:
-            self.logger.error(f"Failed to update urls table: {e}")
-            self.db_connection.rollback()
+            self.logger.error(f"Failed to update database: {e}")
+            print(f"Failed to update database: {e}")    
+            if self.db_conn:
+                self.db_conn.rollback()
 
         self.processed_count += 1
         if self.url_limit and self.processed_count >= self.url_limit:
             self.logger.info(f"URL limit of {self.url_limit} reached. Stopping spider.")
-            print(f"URL limit of {self.url_limit} reached. Stopping spider.")
+            print(f"URL limit of {self.url_limit} reached. Stopping spider.")  
             raise scrapy.exceptions.CloseSpider(reason='url_limit_reached')
