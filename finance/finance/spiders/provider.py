@@ -1,23 +1,19 @@
 import scrapy
-import os
 import psycopg2
 from scrapy import signals
-from scrapy.spiders import Spider
 from urllib.parse import urlparse
-from scrapy.exceptions import DontCloseSpider
 from datetime import datetime
 
 class URLSpider(scrapy.Spider):
     name = "finance"
 
     def __init__(self, url_limit=None, *args, **kwargs):
-        # Initialize other attributes here, but not self.disallowed_subdomains yet
         super(URLSpider, self).__init__(*args, **kwargs)
         self.db_connection = None
         self.db_cursor = None
-        self.url_limit = int(url_limit) if url_limit else 0
+        self.url_limit = int(url_limit) if url_limit else None
         self.processed_count = 0
-        self.db_name = 'ben'
+        self.db_name = 'provider'
         self.db_user = 'postgres'
         self.db_password = 'JollyRoger123'
         self.db_host = 'localhost'
@@ -28,7 +24,8 @@ class URLSpider(scrapy.Spider):
         crawler.signals.connect(spider.spider_opened, signal=signals.spider_opened)
         crawler.signals.connect(spider.spider_closed, signal=signals.spider_closed)
         spider.disallowed_subdomains = spider.settings.get('DISALLOWED_SUBDOMAINS', [])
-        spider.log_startup_settings()  # Call log_startup_settings here
+        spider.allowed_subdomain = spider.settings.get('ALLOWED_SUBDOMAIN', [])
+        spider.log_startup_settings()
         return spider
 
     def spider_opened(self, spider):
@@ -36,97 +33,107 @@ class URLSpider(scrapy.Spider):
         self.clear_log_file()
         try:
             self.db_connection = psycopg2.connect(
-                dbname='ben',
-                user='postgres',
-                password='JollyRoger123',
-                host='localhost'
+                dbname=self.db_name,
+                user=self.db_user,
+                password=self.db_password,
+                host=self.db_host
             )
             self.db_cursor = self.db_connection.cursor()
+            self.logger.info("Successfully connected to the database")
+            print("Successfully connected to the database")
         except psycopg2.Error as e:
             self.logger.error(f"Failed to connect to database: {e}")
+            print(f"Failed to connect to database: {e}")
             raise
+
+    def spider_closed(self, spider, reason):
+        if reason == 'finished':
+            self.log_completion_stats()
+        if self.db_cursor:
+            self.db_cursor.close()
+        if self.db_connection:
+            self.db_connection.close()
+        self.logger.info(f"Spider closed: {reason}")
+        print(f"Spider closed: {reason}")
 
     def clear_log_file(self):
         log_file = self.settings.get('LOG_FILE', 'monitor.log')
         with open(log_file, 'w') as f:
             f.write('')  # This will clear the file
         self.logger.info(f"Cleared log file: {log_file}")
+        print(f"Cleared log file: {log_file}")
 
     def log_startup_settings(self):
-        log_file = self.settings.get('LOG_FILE', 'monitor.log')
-        print(f"Cleared log file: {log_file}")
+        self.logger.info(f"Disallowed Subdomains: {self.disallowed_subdomains}")
         print(f"Disallowed Subdomains: {self.disallowed_subdomains}")
+        self.logger.info(f"Allowed Subdomain: {self.allowed_subdomain}")
+        print(f"Allowed Subdomain: {self.allowed_subdomain}")
+        self.logger.info(f"Concurrency Target: {self.settings.get('CONCURRENT_REQUESTS')}")
         print(f"Concurrency Target: {self.settings.get('CONCURRENT_REQUESTS')}")
+        self.logger.info(f"Batch Size: {self.settings.get('BATCH_SIZE')}")
         print(f"Batch Size: {self.settings.get('BATCH_SIZE')}")
-        print("---------------------------------")
-
-    def spider_closed(self, spider, reason):
-        if reason == 'finished':
-            self.log_completion_stats()
-        # Always close database connections
-        if self.db_cursor:
-            self.db_cursor.close()
-        if self.db_connection:
-            self.db_connection.close()
+        self.logger.info(f"URL Limit: {self.url_limit if self.url_limit else 'No limit'}")
+        print(f"URL Limit: {self.url_limit if self.url_limit else 'No limit'}")
 
     def log_completion_stats(self):
         elapsed_time = datetime.now() - self.start_time
         stats = self.crawler.stats.get_stats()
+        self.logger.info(f"Elapsed Time: {elapsed_time}")
         print(f"Elapsed Time: {elapsed_time}")
+        self.logger.info(f"Max Memory Usage: {stats.get('memusage/max')}")
         print(f"Max Memory Usage: {stats.get('memusage/max')}")
+        self.logger.info(f"Requests: {stats.get('downloader/request_count', 0)}")
         print(f"Requests: {stats.get('downloader/request_count', 0)}")
+        self.logger.info(f"Responses: {stats.get('downloader/response_count', 0)}")
         print(f"Responses: {stats.get('downloader/response_count', 0)}")
         print(f"200: {stats.get('downloader/response_status_count/200', 0)}")
         print(f"301: {stats.get('downloader/response_status_count/301', 0)}")
-        print(f"302: {stats.get('downloader/response_status_count/302', 0)}")
-        print(f"307: {stats.get('downloader/response_status_count/307', 0)}")
         print(f"403: {stats.get('downloader/response_status_count/403', 0)}")
         print(f"404: {stats.get('downloader/response_status_count/404', 0)}")
-        print(f"429: {stats.get('downloader/response_status_count/429', 0)}")
-        print(f"500: {stats.get('downloader/response_status_count/500', 0)}")
-        print(f"503: {stats.get('downloader/response_status_count/503', 0)}")
-        print(f"504: {stats.get('downloader/response_status_count/504', 0)}")
-        print(f"999: {stats.get('downloader/response_status_count/999', 0)}")
+        self.logger.info(f"Dupe Filter: {stats.get('dupefilter/filtered', 0)}")
         print(f"Dupe Filter: {stats.get('dupefilter/filtered', 0)}")
+        self.logger.info(f"Skipped: {stats.get('httperror/response_ignored_count', 0)}")
         print(f"Skipped: {stats.get('httperror/response_ignored_count', 0)}")
+        self.logger.info(f"Processed: {stats.get('item_scraped_count', 0)}")
         print(f"Processed: {stats.get('item_scraped_count', 0)}")
 
     def start_requests(self):
-        if not self.db_cursor:
-            self.logger.error("Database cursor not initialized")
-            return
-
         try:
-            # Select only unprocessed URLs that are not marked as bad
-            self.db_cursor.execute("SELECT id, url FROM urls WHERE processed = FALSE AND bad_url = FALSE")  
+            self.logger.info("Starting to fetch URLs from the database")
+            print("Starting to fetch URLs from the database")
+            self.db_cursor.execute("SELECT COUNT(*) FROM urls WHERE processed = False")
+            count = self.db_cursor.fetchone()[0]
+            self.logger.info(f"Found {count} unprocessed URLs in the database")
+            print(f"Found {count} unprocessed URLs in the database")
+            limit_clause = f" LIMIT {self.url_limit}" if self.url_limit else ""
+            self.db_cursor.execute(f"SELECT id, url FROM urls WHERE processed = False{limit_clause}")
             rows = self.db_cursor.fetchall()
 
-            for row in rows:
-                if self.url_limit and self.processed_count >= self.url_limit:
-                    self.logger.info(f"URL limit reached: {self.url_limit}")
-                    break
+            if not rows:
+                self.logger.warning("No unprocessed URLs found in the database")
+                print("No unprocessed URLs found in the database")
+                return
 
+            for row in rows:
                 url = row[1]
                 parsed_url = urlparse(url)
-
-                # Correctly check for disallowed subdomains
-                disallowed = False
-                for subdomain in self.disallowed_subdomains:
-                    if parsed_url.hostname == subdomain or parsed_url.hostname.endswith("." + subdomain):
-                        disallowed = True
-                        break
-
-                if disallowed:
-                    self.logger.info(f"Skipping URL due to disallowed subdomain: {url}")
+                if parsed_url.hostname is None:
+                    self.logger.warning(f"Skipping invalid URL: {url}")
                     continue
 
+                if not url.startswith('http://') and not url.startswith('https://'):
+                    url = 'https://' + url
+
+                self.logger.info(f"Requesting URL: {url}")
                 yield scrapy.Request(url=url, callback=self.parse, meta={'id': row[0]})
 
         except psycopg2.Error as e:
             self.logger.error(f"Database query failed: {e}")
+            print(f"Database query failed: {e}")
             raise
 
     def parse(self, response):
+        self.logger.info(f"Parsing response from {response.url}")
         provider_texts = response.css('span.caas-attr-provider::text').getall()
         if not provider_texts:
             provider_texts = response.css('a.link.caas-attr-provider::text').getall()
@@ -139,7 +146,20 @@ class URLSpider(scrapy.Spider):
                 'provider': provider
             }
 
+        try:
+            self.db_cursor.execute(
+                "UPDATE urls SET processed = True WHERE id = %s",
+                (response.meta['id'],)
+            )
+            self.db_connection.commit()
+            self.logger.info(f"Updated URL with id {response.meta['id']} as processed")
+            print(f"Updated URL with id {response.meta['id']} as processed")
+        except psycopg2.Error as e:
+            self.logger.error(f"Failed to update urls table: {e}")
+            self.db_connection.rollback()
+
         self.processed_count += 1
         if self.url_limit and self.processed_count >= self.url_limit:
-            self.logger.info("URL limit reached. Stopping spider.")
-            self.crawler.engine.close_spider(self, "URL limit reached")
+            self.logger.info(f"URL limit of {self.url_limit} reached. Stopping spider.")
+            print(f"URL limit of {self.url_limit} reached. Stopping spider.")
+            raise scrapy.exceptions.CloseSpider(reason='url_limit_reached')

@@ -8,10 +8,10 @@ import argparse
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # PostgreSQL connection details
-DB_HOST = os.environ.get('DB_HOST')
-DB_NAME = os.environ.get('DB_NAME')
-DB_USER = os.environ.get('DB_USER')
-DB_PASSWORD = os.environ.get('DB_PASSWORD')
+DB_HOST = 'localhost'
+DB_NAME = 'provider'
+DB_USER = 'postgres'
+DB_PASSWORD = 'JollyRoger123'
 DB_PORT = '5432'
 
 parser = argparse.ArgumentParser(description="Insert URLs into PostgreSQL from a text file.")

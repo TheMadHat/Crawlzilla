@@ -68,7 +68,6 @@ class ProgressBar:
         if self.progress:
             self.progress.update(self.task, concurrent=concurrent)
                
-
 class FinanceDownloaderMiddleware:
     @classmethod
     def from_crawler(cls, crawler):
@@ -82,10 +81,6 @@ class FinanceDownloaderMiddleware:
     def process_response(self, request, response, spider):
         if 400 <= response.status < 600:  # Check for 4xx and 5xx status codes
             spider.logger.warning(f"Got bad status code {response.status} for URL: {request.url}")
-            spider.db_cursor.execute(
-                "UPDATE urls SET bad_url = TRUE WHERE url = %s", (request.url,)
-            )
-            spider.db_conn.commit()
         return response
 
     def process_exception(self, request, exception, spider):
