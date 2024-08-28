@@ -132,34 +132,34 @@ class URLSpider(scrapy.Spider):
             print(f"Database query failed: {e}")
             raise
 
-    def parse(self, response):
-        self.logger.info(f"Parsing response from {response.url}")
-        provider_texts = response.css('span.caas-attr-provider::text').getall()
-        if not provider_texts:
-            provider_texts = response.css('a.link.caas-attr-provider::text').getall()
+def parse(self, response):
+    self.logger.info(f"Parsing response from {response.url}")
+    provider_texts = response.css('span.caas-attr-provider::text').getall()
+    if not provider_texts:
+        provider_texts = response.css('a.link.caas-attr-provider::text').getall()
 
-        for text in provider_texts:
-            provider = text.strip()
-            yield {
-                'id': response.meta['id'],
-                'url': response.url,
-                'provider': provider
-            }
+    for text in provider_texts:
+        provider = text.strip()
+        yield {
+            'id': response.meta['id'],
+            'url': response.url,
+            'provider': provider
+        }
 
-        try:
-            self.db_cursor.execute(
-                "UPDATE urls SET processed = True WHERE id = %s",
-                (response.meta['id'],)
-            )
-            self.db_connection.commit()
-            self.logger.info(f"Updated URL with id {response.meta['id']} as processed")
-            print(f"Updated URL with id {response.meta['id']} as processed")
-        except psycopg2.Error as e:
-            self.logger.error(f"Failed to update urls table: {e}")
-            self.db_connection.rollback()
+    try:
+        # Insert into the processed_urls table
+        self.db_cursor.execute(
+            "INSERT INTO processed_urls (id, url, timestamp) VALUES (%s, %s, NOW())",
+            (response.meta['id'], response.url)
+        )
+        self.db_connection.commit()
+        self.logger.info(f"Inserted URL with id {response.meta['id']} into processed_urls")
+    except psycopg2.Error as e:
+        self.logger.error(f"Failed to insert into processed_urls table: {e}")
+        self.db_connection.rollback()
 
-        self.processed_count += 1
-        if self.url_limit and self.processed_count >= self.url_limit:
-            self.logger.info(f"URL limit of {self.url_limit} reached. Stopping spider.")
-            print(f"URL limit of {self.url_limit} reached. Stopping spider.")
-            raise scrapy.exceptions.CloseSpider(reason='url_limit_reached')
+    self.processed_count += 1
+    if self.url_limit and self.processed_count >= self.url_limit:
+        self.logger.info(f"URL limit of {self.url_limit} reached. Stopping spider.")
+        print(f"URL limit of {self.url_limit} reached. Stopping spider.")
+        raise scrapy.exceptions.CloseSpider(reason='url_limit_reached')
