@@ -1,34 +1,49 @@
 import requests
-from bs4 import BeautifulSoup
+from time import sleep
+from random import randint
 
-def get_green_links(archive_url):
-    response = requests.get(archive_url)
-    soup = BeautifulSoup(response.text, 'html.parser')
+# Load URLs from 'urls.txt'
+with open('urls.txt', 'r') as file:
+    urls = [line.strip() for line in file if line.strip()]
+
+for url in urls:
+    full_url = 'http://web.archive.org/cdx/search/cdx?url=' + url + '&filter=statuscode:301'
+    response = requests.get(full_url)
+
+    if response.status_code == 200:
+        # Split the response text by space and extract the timestamp
+        lines = response.text.splitlines()
+        if lines:
+            first_line = lines[0]
+            parts = first_line.split()
+            timestamp = parts[1]  # The timestamp is the second part after splitting by space
+
+            # Construct the jump URL
+            jump_url = f'https://web.archive.org/web/{timestamp}/{url}'
+
+            # Make a HEAD request to get the headers only
+            head_response = requests.head(jump_url, allow_redirects=False)
+
+            # Extract the Location header if it exists
+            if 'Location' in head_response.headers:
+                location = head_response.headers['Location']
+
+                # Find the position of 'www' and slice the string from there
+                www_index = location.find('www')
+                if www_index != -1:
+                    original_url = 'https://' + location[www_index:]
+                    with open('output.txt', 'a') as file:
+                        print(f"Writing output to file for {full_url} | {original_url}")
+                        output = f"{full_url} | {original_url}\n"
+                        file.write(output)
+                else:
+                    print("Could not find 'www' in the Location URL.")
+            else:
+                print("No Location header found.")
+        else:
+            print("No data found in response.")
+    else:
+        print(f"Failed to fetch data, status code: {response.status_code}")
     
-    # Find all green links (successfully archived)
-    green_links = []
-    for a_tag in soup.find_all('a', href=True):
-        # Assuming 'green' links have a specific class or style
-        if 'some-green-class' in a_tag.get('class', []):  # Adjust as necessary
-            green_links.append(a_tag['href'])
-    
-    return green_links
-
-def crawl_urls(urls):
-    status_codes = {}
-    for url in urls:
-        try:
-            response = requests.get(url, timeout=10)
-            status_codes[url] = response.status_code
-        except requests.RequestException as e:
-            status_codes[url] = f'Error: {e}'
-    
-    return status_codes
-
-# Main script
-archive_url = 'https://web.archive.org/web/20130815000000*/engadget.com/entry/1234000017043956/'
-green_links = get_green_links(archive_url)
-status_codes = crawl_urls(green_links)
-
-for url, status in status_codes.items():
-    print(f'URL: {url} - Status Code: {status}')
+    sleep(randint(20, 40))
+    print("Sleeping for 15-30 seconds...")
